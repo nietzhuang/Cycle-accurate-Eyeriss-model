@@ -1,7 +1,7 @@
 # Eyeriss-unfinished
 
 Introduction:
-As an IC designer and DNN accelerator researcher, I found that there exists several sophisticated designs of accelerators, however, Eyeriss project is the one inspires me the most.
+As an IC designer and DNN accelerator researcher, I found that there exists several sophisticated designs of accelerators, however, Eyeriss project is the one inspiring me the most.
 The efficiency and performance were both impressive at the time, even now Eyeriss still is. Moreover, the tutorial articals are incredibly in detail.
 In fact, because many variant DNN models booming throughout the world are much difficult to design a corresponding accelerator such as MobileNet, SqueezeNet, old design accelerator might be lack of optimisation. Eyeriss project has design its better and far more sophisticated variant, Eyeriss v2.
 
