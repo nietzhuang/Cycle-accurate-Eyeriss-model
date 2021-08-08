@@ -9,7 +9,11 @@ This repository involves a mimic design referred to MIT Eyeriss projecte using S
 Afterwards, if there's enough time, I'll transpote it into verilog HDL to complete it as ASIC circuit. 
 
 
+Current Progress:
+Uploaded version LowEyeriss_v0919. In this version, LowEyeriss can process multiple channels as well as process logical mapping on physical mapping.
 
+Next Progress:
+Modify the script how testbench choose test patterns to make verification more convienient and easier.
 
 
 
