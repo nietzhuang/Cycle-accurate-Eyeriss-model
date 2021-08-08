@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\patterns">
+      <UniqueIdentifier>{6da53d5a-d135-4934-8fed-c14da7006493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\patterns\filter3x3x3_ifmap5x5x3">
+      <UniqueIdentifier>{2812be93-2c17-4325-bd6f-1366d6a65389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\patterns\filter5x5x1_ifmap11x11x1">
+      <UniqueIdentifier>{71e4d3b1-2525-4195-b301-b79414333cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\patterns\filter12x12x1_ifmap25x25x1">
+      <UniqueIdentifier>{18fb3659-e41f-4f4f-864c-221edcb6ff03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\patterns\filter5x5x1_ifmap19x19x1">
+      <UniqueIdentifier>{6201b027-8823-477a-98ae-29e71dfd7e73}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RegFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MAC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PE_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LowEyeriss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testbench.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="weight3.dat">
+      <Filter>Source Files\patterns\filter12x12x1_ifmap25x25x1</Filter>
+    </ClInclude>
+    <ClInclude Include="weight4.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap19x19x1</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MAC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scheduler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testbench.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="iact.dat">
+      <Filter>Source Files\patterns\filter3x3x3_ifmap5x5x3</Filter>
+    </None>
+    <None Include="psum.dat">
+      <Filter>Source Files\patterns\filter3x3x3_ifmap5x5x3</Filter>
+    </None>
+    <None Include="weight.dat">
+      <Filter>Source Files\patterns\filter3x3x3_ifmap5x5x3</Filter>
+    </None>
+    <None Include="ofmap.dat">
+      <Filter>Source Files\patterns\filter3x3x3_ifmap5x5x3</Filter>
+    </None>
+    <None Include="weight2.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap11x11x1</Filter>
+    </None>
+    <None Include="ofmap2.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap11x11x1</Filter>
+    </None>
+    <None Include="iact2.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap11x11x1</Filter>
+    </None>
+    <None Include="psum2.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap11x11x1</Filter>
+    </None>
+    <None Include="iact3.dat">
+      <Filter>Source Files\patterns\filter12x12x1_ifmap25x25x1</Filter>
+    </None>
+    <None Include="ofmap3.dat">
+      <Filter>Source Files\patterns\filter12x12x1_ifmap25x25x1</Filter>
+    </None>
+    <None Include="psum3.dat">
+      <Filter>Source Files\patterns\filter12x12x1_ifmap25x25x1</Filter>
+    </None>
+    <None Include="iact4.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap19x19x1</Filter>
+    </None>
+    <None Include="ofmap4.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap19x19x1</Filter>
+    </None>
+    <None Include="psum4.dat">
+      <Filter>Source Files\patterns\filter5x5x1_ifmap19x19x1</Filter>
+    </None>
+  </ItemGroup>
+</Project>
