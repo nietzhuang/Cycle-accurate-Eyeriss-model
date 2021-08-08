@@ -28,9 +28,6 @@
     <Filter Include="Source Files\patterns\filter5x5x1_ifmap19x19x1">
       <UniqueIdentifier>{6201b027-8823-477a-98ae-29e71dfd7e73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\patterns\filter5x5x1_ifmap34x34x1">
-      <UniqueIdentifier>{2d342f1d-5331-46b0-98c3-2a6049b86175}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RegFile.h">
@@ -132,18 +129,6 @@
     </None>
     <None Include="psum4.dat">
       <Filter>Source Files\patterns\filter5x5x1_ifmap19x19x1</Filter>
-    </None>
-    <None Include="iact5.dat">
-      <Filter>Source Files\patterns\filter5x5x1_ifmap34x34x1</Filter>
-    </None>
-    <None Include="ofmap5.dat">
-      <Filter>Source Files\patterns\filter5x5x1_ifmap34x34x1</Filter>
-    </None>
-    <None Include="psum5.dat">
-      <Filter>Source Files\patterns\filter5x5x1_ifmap34x34x1</Filter>
-    </None>
-    <None Include="weight5.dat">
-      <Filter>Source Files\patterns\filter5x5x1_ifmap34x34x1</Filter>
     </None>
   </ItemGroup>
 </Project>

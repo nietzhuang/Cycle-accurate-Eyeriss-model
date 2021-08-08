@@ -142,12 +142,6 @@ SC_MODULE(SYSTEM) {
 		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_0->w_in, "low_eyeriss_i.pe_array_i.PE_5_0.w_in");
 		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_0->ifmap_in, "low_eyeriss_i.pe_array_i.PE_5_0.ifmap_in");
 		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_0->ofmap_out, "low_eyeriss_i.pe_array_i.PE_5_0.ofmap_out");
-		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_1->enable, "low_eyeriss_i.pe_array_i.PE_5_1.enable");
-		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_1->in_vld, "low_eyeriss_i.pe_array_i.PE_5_1.in_vld");
-		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_1->out_vld, "low_eyeriss_i.pe_array_i.PE_5_1.out_vld");
-		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_1->w_in, "low_eyeriss_i.pe_array_i.PE_5_1.w_in");
-		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_1->ifmap_in, "low_eyeriss_i.pe_array_i.PE_5_1.ifmap_in");
-		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_5_1->ofmap_out, "low_eyeriss_i.pe_array_i.PE_5_1.ofmap_out");
 		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_6_0->enable, "low_eyeriss_i.pe_array_i.PE_6_0.enable");
 		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_6_0->in_vld, "low_eyeriss_i.pe_array_i.PE_6_0.in_vld");
 		sc_trace(tracefile, low_eyeriss_i->pe_array_i->PE_6_0->out_vld, "low_eyeriss_i.pe_array_i.PE_6_0.out_vld");

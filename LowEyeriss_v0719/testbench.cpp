@@ -47,6 +47,7 @@ void TESTBENCH::dram_weight(void) {
 		w_rdata.write(weight_tmp[addr_w][w_ch]);
 		wait();
 	}
+
 }
 
 void TESTBENCH::dram_ifmap(void) {

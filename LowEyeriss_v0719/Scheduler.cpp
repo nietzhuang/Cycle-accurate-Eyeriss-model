@@ -114,9 +114,6 @@ void SCHEDULER::weight_scheduling(void) {
 					}
 					for (int num_width = PE_width; num_width < ofmap_width; num_width++) {
 						for (int num_height = filter_height; num_height < 2 * filter_height; num_height++) {
-							if (2 * filter_height > PE_length)
-								cout << "Warning: Mapping can not fit into PE array." << endl;
-
 							weight_out_PE[num_height][num_width-PE_width].write(weight_tmp[num_height - filter_height][cnt_weightrow]);
 						}
 					}

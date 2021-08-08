@@ -243,7 +243,7 @@ void GLB::GLB_ofmap(void) {
 
 				if (out_valid) {
 					ofmap_ch = ofmap_channel.read();
-					for (int i = 0; i < ofmap_height; i++) {
+					for (int i = 0; i < ofmap_width; i++) {
 						for (int j = 0; j < filter_height; j++) {
 							if (out_vld[j][i].read())
 								ofmap_tmp[i] += ofmap_out[j][i].read();
@@ -279,73 +279,12 @@ void GLB::GLB_ofmap(void) {
 			}
 			// Lack of PE_width RS condition
 			else if (ofmap_width > PE_width && filter_height <= PE_length) {
-				for (int i = 0; i < ofmap_width; i++) {
-					for (int j = 0; j < filter_height; j++) {
-						if (out_vld[j][i].read())
-							out_valid = true;
-						else
-							out_valid = false;
-					}
-				}
-				
-				if (out_valid) {
-					ofmap_ch = ofmap_channel.read();
-					for (int i = 0; i < ofmap_height; i++) {
-						if (i < PE_width) {
-							for (int j = 0; j < filter_height; j++) {
-								if (out_vld[j][i].read())
-									ofmap_tmp[i] += ofmap_out[j][i].read();
-							}
-							tmp = ofmap_buf[i][ofmap_column].read();
-							ofmap_buf[i][ofmap_column].write(tmp + ofmap_tmp[i]);
-							ofmap_test_buf[i][ofmap_column][ofmap_ch].write(ofmap_tmp[i]);	// Only for check intermediate ofmap		
-
-							ofmap_tmp[i] = 0;  // clear after store in buffer
-						}
-						else if (i < 2 * PE_width) {
-							for (int j = filter_height; j < 2 * filter_height; j++) {
-								if (out_vld[j][i-PE_width].read())
-									ofmap_tmp[i] += ofmap_out[j][i-PE_width].read();
-							}
-							tmp = ofmap_buf[i][ofmap_column].read();
-							ofmap_buf[i][ofmap_column].write(tmp + ofmap_tmp[i]);
-							ofmap_test_buf[i][ofmap_column][ofmap_ch].write(ofmap_tmp[i]);	// Only for check intermediate ofmap
-
-							ofmap_tmp[i] = 0;  // clear after store in buffer
-						}
-						else
-							cout << "Warning: " << endl;
-					}
-					ofmap_column++;
-
-					if (ofmap_column == ofmap_width) {
-						ofmap_column = 0;
-						ofmap_channel.write(ofmap_ch + 1);
-						channel_done.write(1);
-
-						if (ofmap_ch == num_channel - 1) {
-							layer_done.write(1);
-							wait();
-						}
-						wait();
-					}
-					else
-						wait();
-
-				}
-				else {
-					channel_done.write(0);
-
-					wait();
-				}
+			
+			
+			
+			
 			}
-			// Unsupported RS condition
-			else {
-				cerr << "Error: RS dataflow is supported,"
-					<< "but size of PE array can't support." << endl;
-				sc_stop();
-				return;
-			}
+
 		}
 	}
 }
@@ -379,8 +318,8 @@ void GLB::ofmap_check(void) {
 					for (int k = 0; k < ofmap_width; k++) {
 
 						//!!! The function of loader has to generalise afterwards.
-						//psum_file >> psum_tmp[0] >> psum_tmp[1] >> psum_tmp[2];
-						psum_file >> psum_tmp[0];
+						psum_file >> psum_tmp[0] >> psum_tmp[1] >> psum_tmp[2];
+						//psum_file >> psum_tmp[0];
 						if (ofmap_test_buf[j][k][i].read() != psum_tmp[i]) {
 							cout << endl;
 							cout << setw(30) << "ofmap[" << j << "][" << k << "] return: "

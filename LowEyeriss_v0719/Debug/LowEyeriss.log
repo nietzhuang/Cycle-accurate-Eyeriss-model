@@ -4,18 +4,19 @@ APPDATA = C:\Users\nietzhuang\AppData\Roaming
 CommonProgramFiles = C:\Program Files (x86)\Common Files
 CommonProgramFiles(x86) = C:\Program Files (x86)\Common Files
 CommonProgramW6432 = C:\Program Files\Common Files
-COMPUTERNAME = JARVISDESKTOP
+COMPLUS_InstallRoot = 
+COMPLUS_Version = 
+COMPUTERNAME = DESKTOP-74V2I7A
 ComSpec = C:\WINDOWS\system32\cmd.exe
 CUDA_PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
 CUDA_PATH_V11_3 = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
 DriverData = C:\Windows\System32\Drivers\DriverData
-ForceIdentityAuthenticationType = Embedded
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 FPS_BROWSER_USER_PROFILE_STRING = Default
 HOMEDRIVE = C:
 HOMEPATH = \Users\nietzhuang
 LOCALAPPDATA = C:\Users\nietzhuang\AppData\Local
-LOGONSERVER = \\JARVISDESKTOP
+LOGONSERVER = \\DESKTOP-74V2I7A
 MSBuildLoadMicrosoftTargetsReadOnly = true
 NUMBER_OF_PROCESSORS = 4
 NVCUDASAMPLES11_3_ROOT = C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.3
@@ -24,7 +25,7 @@ NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
 OneDrive = C:\Users\rock1\OneDrive
 OneDriveConsumer = C:\Users\rock1\OneDrive
 OS = Windows_NT
-Path = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\libnvvp;C:\Program Files\Python39\Scripts\;C:\Program Files\Python39\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\NVIDIA Corporation\Nsight Compute 2021.1.1\;D:\Program Files\Git\cmd;C:\Users\nietzhuang\AppData\Local\Microsoft\WindowsApps;C:\Users\nietzhuang\AppData\Local\Microsoft\WindowsApps;C:\Users\nietzhuang\AppData\Local\atom\bin;C:\Users\nietzhuang\AppData\Local\GitHubDesktop\bin;D:\Program Files\JetBrains\PyCharm 2020.1\bin;
+Path = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\libnvvp;C:\Program Files\Python39\Scripts\;C:\Program Files\Python39\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\nietzhuang\AppData\Local\Programs\Python\Python39;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\NVIDIA Corporation\Nsight Compute 2021.1.1\;C:\Users\nietzhuang\AppData\Local\Microsoft\WindowsApps;D:\Program Files\JetBrains\PyCharm 2020.1\bin;C:\Users\nietzhuang\AppData\Local\atom\bin;C:\Users\nietzhuang\AppData\Local\Microsoft\WindowsApps;
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
 PkgDefApplicationConfigFile = C:\Users\nietzhuang\AppData\Local\Microsoft\VisualStudio\16.0_bac89adf\devenv.exe.config
 PROCESSOR_ARCHITECTURE = x86
@@ -39,16 +40,15 @@ ProgramW6432 = C:\Program Files
 PSModulePath = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
 PUBLIC = C:\Users\Public
 PyCharm = D:\Program Files\JetBrains\PyCharm 2020.1\bin;
-ServiceHubLogSessionKey = F1FFFD08
+ServiceHubLogSessionKey = FAEB988A
 SESSIONNAME = Console
-SignInWithHomeTenantOnly = False
 SystemDrive = C:
 SystemRoot = C:\WINDOWS
 TEMP = C:\Users\NIETZH~1\AppData\Local\Temp
 ThreadedWaitDialogDpiContext = -4
 TMP = C:\Users\NIETZH~1\AppData\Local\Temp
-USERDOMAIN = JARVISDESKTOP
-USERDOMAIN_ROAMINGPROFILE = JARVISDESKTOP
+USERDOMAIN = DESKTOP-74V2I7A
+USERDOMAIN_ROAMINGPROFILE = DESKTOP-74V2I7A
 USERNAME = rock1
 USERPROFILE = C:\Users\nietzhuang
 VisualStudioDir = C:\Users\nietzhuang\Documents\Visual Studio 2019
@@ -60,25 +60,5 @@ VSLANG = 1033
 VSSKUEDITION = Community
 windir = C:\WINDOWS
 
-  PE.cpp
-  MAC.cpp
-  RegFile.cpp
-  Scheduler.cpp
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\Scheduler.cpp(83,74): warning C4244: 'argument': conversion from 'sc_dt::int_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\Scheduler.cpp(112,74): warning C4244: 'argument': conversion from 'sc_dt::int_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\Scheduler.cpp(120,99): warning C4244: 'argument': conversion from 'sc_dt::int_type' to 'int', possible loss of data
-  GLB.cpp
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(245,35): warning C4244: '=': conversion from 'sc_dt::int_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(249,47): warning C4244: '+=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(251,44): warning C4244: '=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(292,35): warning C4244: '=': conversion from 'sc_dt::int_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(297,48): warning C4244: '+=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(299,45): warning C4244: '=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(308,57): warning C4244: '+=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\GLB.cpp(310,45): warning C4244: '=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
   main.cpp
-  testbench.cpp
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\testbench.cpp(43,26): warning C4244: '=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\testbench.cpp(78,33): warning C4244: '=': conversion from 'sc_dt::uint_type' to 'int', possible loss of data
-  Generating Code...
-  LowEyeriss.vcxproj -> C:\Users\nietzhuang\Documents\Works\GitHub\Eyeriss(Transfer_0719)\Debug\LowEyeriss.exe
+  LowEyeriss.vcxproj -> C:\Users\nietzhuang\source\repos\LowEyeriss\Debug\LowEyeriss.exe
