@@ -10,10 +10,10 @@ Afterwards, if there's enough time, I'll transpote it into verilog HDL to comple
 
 
 Current Progress:
-Uploaded version LowEyeriss_v0919. In this version, LowEyeriss can process multiple channels as well as process logical mapping on physical mapping.
+Modify the script how testbench choose test patterns to make verification more convienient and easier.
 
 Next Progress:
-Modify the script how testbench choose test patterns to make verification more convienient and easier.
+Encounter a problem of stack size overflow when pattern is large at function void SCHEDULER::ifmap_scheduling(void), have to fix it. 
 
 
 
