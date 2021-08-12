@@ -18,12 +18,12 @@ def conv3D(filter, image, stride):
     return ofmap, psum
 
 # Set parameters
-pattern_seed    = 2
-channels        = 2
-filter_height   = 11
-filter_width    = 11
-ifmap_height    = 80
-ifmap_width     = 80
+pattern_seed    = 3
+channels        = 3
+filter_height   = 5
+filter_width    = 5
+ifmap_height    = 11
+ifmap_width     = 11
 ofmap_height    = ifmap_height - filter_height + 1
 ofmap_width     = ifmap_width - filter_width + 1
 
@@ -31,9 +31,7 @@ ofmap_width     = ifmap_width - filter_width + 1
 os.chdir('Patterns')
 filter = np.random.randint(0, 2, size=(channels, filter_height, filter_width)) # channel, height, width
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
-
 ofmap, psum = conv3D(filter, image, stride=1)
-print(psum.shape)
 
 filename_filter = "filter_random" + str(pattern_seed) + ".dat"
 filename_filter_C = "filter_rand" + str(pattern_seed) + "_C++.dat"
@@ -41,106 +39,33 @@ filename_image  = "image_random" + str(pattern_seed) + ".dat"
 filename_image_C = "image_rand" + str(pattern_seed) + "_C++.dat"
 filename_ofmap = "ofmap_random" + str(pattern_seed) + ".dat"
 filename_ofmap_C = "ofmap_rand" + str(pattern_seed) + "_C++.dat"
-filename_psum = "psum_random" + str(pattern_seed) + ".dat"
+# filename_psum = "psum_random" + str(pattern_seed) + ".dat"
 filename_psum_C = "psum_rand" + str(pattern_seed) + "_C++.dat"
 
 # Write random array data
-with open(filename_filter, 'w') as f:
-    for char in filter:
-        f.write(str(char))
+filter = np.reshape(filter, (channels, filter_height*filter_width))
+np.savetxt(filename_filter, filter, fmt='%d')  # Save as pattern in rows of channel.
+with open(filename_filter_C, 'w') as f:
+    for row in filter:
+        np.savetxt(f, row, fmt='%d')  # Save as SystemC pattern as flattern data.
 f.close()
-with open(filename_image, 'w') as im:
-    for line in image:
-        for char in line:
-            im.write(str(char))
+
+image = np.reshape(image, (channels, ifmap_height*ifmap_width))
+np.savetxt(filename_image, image, fmt='%d')
+with open(filename_image_C, 'w') as im:
+    for row in image:
+        np.savetxt(im, row, fmt='%d')
 im.close()
-with open(filename_ofmap, 'w') as of:
-    for char in ofmap:
-        of.write(str(char))
-of.close()
 
-# Convert array data to convenient data for C++ pattern
-with open(filename_filter, 'r') as f:
-    for line in f.readlines():
-        line = line.replace('][', ' ')
-        line = line.replace('[[', '[')
-        line = line.replace(']]', ']')
-        line = line.replace(' [', ' ')
-        line = line.replace(']', '')
-        line = line.replace('[', '\n')
-        line = line.replace(' ', '\n')
+ofmap = np.reshape(ofmap, (ofmap_height*ofmap_width))
+np.savetxt(filename_ofmap, ofmap, fmt='%d')
+np.savetxt(filename_ofmap_C, ofmap, fmt='%d')  # channel of ofmap is always only one.
 
-        with open(filename_filter_C, 'a') as w:
-            if line[0] == '\n':
-                line = line[1:]
-            w.write(line)
-
-# Check whether the number of lines is correct
-num_line = 0
-with open(filename_filter_C, 'r') as im:
-    for line in im.readlines():
-        num_line += 1
-    if (num_line != filter_height*filter_width*channels):
-        print('Warning! This random pattern may not match the format. Please run the script again.')
-f.close()
-w.close()
-
-with open(filename_image, 'r') as im:
-    for line in im.readlines():
-        line = line.replace('][', ' ')
-        line = line.replace('[[', '[')
-        line = line.replace(']]', ']')
-        line = line.replace(' [', '')
-        line = line.replace(']', '')
-        line = line.replace('[', '\n')
-        line = line.replace(' ', '\n')
-
-        with open(filename_image_C, 'a') as w:
-            if line[0] == '\n':
-                line = line[1:]
-            w.write(line)
-
-# Check whether the number of lines is correct
-num_line = 0
-with open(filename_image_C, 'r') as im:
-    for line in im.readlines():
-        num_line += 1
-    if (num_line != ifmap_height*ifmap_width*channels):
-        print('Warning! This random pattern may not match the format. Please run the script again.')
-im.close()
-w.close()
-
-with open(filename_ofmap, 'r') as of:
-    for line in of.readlines():
-        line = line.replace('.', '')
-        line = line.replace('][', ' ')
-        line = line.replace('[[', '[')
-        line = line.replace(']]', ']')
-        line = line.replace(' [', '')
-        line = line.replace(']', '')
-        line = line.replace('[', '\n')
-        line = line.replace(' ', '\n')
-
-        with open(filename_ofmap_C, 'a') as w:
-            if line[0] == '\n':
-                line = line[1:]
-            w.write(line)
-
-# Check whether the number of lines is correct
-num_line = 0
-with open(filename_ofmap_C, 'r') as of:
-    for line in of.readlines():
-        num_line += 1
-    if (num_line != ofmap_height*ofmap_width):
-        print('Warning! This random pattern may not match the format. Please run the script again.')
-of.close()
-w.close()
-
-
-
-
-
-
+psum = np.reshape(psum, (channels, ofmap_height*ofmap_width))
+with open(filename_psum_C, 'w') as p:
+    for row in psum:
+        np.savetxt(p, row, fmt='%d')
+p.close()
 
 
 # Arrange data path
@@ -156,3 +81,7 @@ try:
     shutil.move("./"+ filename_ofmap_C, "./Convert2C++/.")
 except:
     os.replace("./"+ filename_ofmap_C, "./Convert2C++/" + filename_ofmap_C)
+try:
+    shutil.move("./"+ filename_psum_C, "./Convert2C++/.")
+except:
+    os.replace("./"+ filename_psum_C, "./Convert2C++/" + filename_psum_C)
