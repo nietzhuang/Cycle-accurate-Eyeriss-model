@@ -18,7 +18,7 @@ def conv3D(filter, image, stride):
     return ofmap, psum
 
 # Set parameters
-pattern_name    = 'test'
+pattern_name    = 3  #'test'
 channels        = 3
 filter_height   = 5
 filter_width    = 5
@@ -49,14 +49,6 @@ filter = np.fliplr(filter)
 with open(filename_filter_C, 'w') as f:
     np.savetxt(f, filter, fmt='%d')
 f.close()
-"""
-np.savetxt(filename_filter, filter, fmt='%d')  # Save as pattern in rows of channel.
-with open(filename_filter_C, 'w') as f:
-    for row in filter:
-        np.savetxt(f, row, fmt='%d')  # Save as SystemC pattern as flattern data.
-f.close()
-"""
-
 
 image = np.reshape(image, (channels, ifmap_height*ifmap_width))
 image = np.rot90(image, 3)
@@ -64,13 +56,6 @@ image = np.fliplr(image)
 with open(filename_image_C, 'w') as im:
     np.savetxt(im, image, fmt='%d')
 im.close()
-"""
-np.savetxt(filename_image, image, fmt='%d')
-with open(filename_image_C, 'w') as im:
-    for row in image:
-        np.savetxt(im, row, fmt='%d')
-im.close()
-"""
 
 ofmap = np.reshape(ofmap, (ofmap_height*ofmap_width))
 np.savetxt(filename_ofmap, ofmap, fmt='%d')
