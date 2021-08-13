@@ -18,12 +18,12 @@ def conv3D(filter, image, stride):
     return ofmap, psum
 
 # Set parameters
-pattern_seed    = 3
+pattern_name    = 'test'
 channels        = 3
 filter_height   = 5
 filter_width    = 5
-ifmap_height    = 11
-ifmap_width     = 11
+ifmap_height    = 34
+ifmap_width     = 34
 ofmap_height    = ifmap_height - filter_height + 1
 ofmap_width     = ifmap_width - filter_width + 1
 
@@ -33,38 +33,54 @@ filter = np.random.randint(0, 2, size=(channels, filter_height, filter_width)) #
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
 ofmap, psum = conv3D(filter, image, stride=1)
 
-filename_filter = "filter_random" + str(pattern_seed) + ".dat"
-filename_filter_C = "filter_rand" + str(pattern_seed) + "_C++.dat"
-filename_image  = "image_random" + str(pattern_seed) + ".dat"
-filename_image_C = "image_rand" + str(pattern_seed) + "_C++.dat"
-filename_ofmap = "ofmap_random" + str(pattern_seed) + ".dat"
-filename_ofmap_C = "ofmap_rand" + str(pattern_seed) + "_C++.dat"
-# filename_psum = "psum_random" + str(pattern_seed) + ".dat"
-filename_psum_C = "psum_rand" + str(pattern_seed) + "_C++.dat"
+filename_filter = "filter_random" + str(pattern_name) + ".dat"
+filename_filter_C = "filter_rand" + str(pattern_name) + "_C++.dat"
+filename_image  = "image_random" + str(pattern_name) + ".dat"
+filename_image_C = "image_rand" + str(pattern_name) + "_C++.dat"
+filename_ofmap = "ofmap_random" + str(pattern_name) + ".dat"
+filename_ofmap_C = "ofmap_rand" + str(pattern_name) + "_C++.dat"
+# filename_psum = "psum_random" + str(pattern_name) + ".dat"
+filename_psum_C = "psum_rand" + str(pattern_name) + "_C++.dat"
 
 # Write random array data
 filter = np.reshape(filter, (channels, filter_height*filter_width))
+filter = np.rot90(filter, 3)
+filter = np.fliplr(filter)
+with open(filename_filter_C, 'w') as f:
+    np.savetxt(f, filter, fmt='%d')
+f.close()
+"""
 np.savetxt(filename_filter, filter, fmt='%d')  # Save as pattern in rows of channel.
 with open(filename_filter_C, 'w') as f:
     for row in filter:
         np.savetxt(f, row, fmt='%d')  # Save as SystemC pattern as flattern data.
 f.close()
+"""
+
 
 image = np.reshape(image, (channels, ifmap_height*ifmap_width))
+image = np.rot90(image, 3)
+image = np.fliplr(image)
+with open(filename_image_C, 'w') as im:
+    np.savetxt(im, image, fmt='%d')
+im.close()
+"""
 np.savetxt(filename_image, image, fmt='%d')
 with open(filename_image_C, 'w') as im:
     for row in image:
         np.savetxt(im, row, fmt='%d')
 im.close()
+"""
 
 ofmap = np.reshape(ofmap, (ofmap_height*ofmap_width))
 np.savetxt(filename_ofmap, ofmap, fmt='%d')
 np.savetxt(filename_ofmap_C, ofmap, fmt='%d')  # channel of ofmap is always only one.
 
 psum = np.reshape(psum, (channels, ofmap_height*ofmap_width))
+psum = np.rot90(psum, 3)
+psum = np.fliplr(psum)
 with open(filename_psum_C, 'w') as p:
-    for row in psum:
-        np.savetxt(p, row, fmt='%d')
+    np.savetxt(p, psum, fmt='%d')  # Save psum in terms of psum and channel in row versus column.
 p.close()
 
 
