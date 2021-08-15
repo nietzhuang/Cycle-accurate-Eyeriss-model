@@ -4,14 +4,14 @@ import numpy as np
 def conv2D(filter, image, stride):
     filter_height, filter_width = filter.shape
     image_height, image_width = image.shape
-    ofmap_height = image_height - filter_height + stride
-    ofmap_width = image_width - filter_width + stride
+    ofmap_height = int((image_height - filter_height + stride) / stride)
+    ofmap_width = int((image_width - filter_width + stride) / stride)
 
     ofmap = np.zeros((ofmap_height, ofmap_width))
     with open('psum.dat', 'w') as p:
         for i in range(ofmap_height):
             for j in range(ofmap_width):
-                ofpsum = np.multiply(filter[:, :], image[0+i:filter_height+i, 0+j:filter_width+j])
+                ofpsum = np.multiply(filter[:, :], image[0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
                 p.write("ofmpa psum[%d][%d]\n" % (i, j))
                 p.write(str(ofpsum))
                 p.write('\n')
@@ -20,18 +20,16 @@ def conv2D(filter, image, stride):
     return ofmap[:, :]
 
 def conv3D(filter, image, stride):
-    #filter_height, filter_width, channel_number = filter.shape
-    #image_height, image_width, channel_number = image.shape
     channel_number, filter_height, filter_width = filter.shape
     channel_number, image_height, image_width = image.shape
-    ofmap_height = image_height - filter_height + stride
-    ofmap_width = image_width - filter_width + stride
+    ofmap_height = int((image_height - filter_height + stride) / stride)
+    ofmap_width = int((image_width - filter_width + stride) / stride)
 
     psum = np.zeros((channel_number, ofmap_height, ofmap_width))
     for ch in range(channel_number):
         for i in range(ofmap_height):
             for j in range(ofmap_width):
-                ofpsum = np.multiply(filter[ch, :, :], image[ch, 0+i:filter_height+i, 0+j:filter_width+j])
+                ofpsum = np.multiply(filter[ch, :, :], image[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
                 psum[ch ,i, j] =  sum(sum(ofpsum))
                 ofmap = sum(psum)
 
@@ -73,10 +71,10 @@ image = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                   [0, 3, 8, 7, 0, 0, 1, 0, 2, 1, 0, 2, 1, 1, 0, 0, 1, 3, 5, 1, 2, 3, 1, 3, 5, 3, 0, 6, 0, 1, 3, 5, 4, 0],
                   [0, 5, 8, 1, 3, 5, 3, 1, 3, 7, 6, 2, 3, 0, 1, 1, 1, 0, 3, 3, 0, 2, 1, 1, 2, 1, 3, 5, 3, 1, 3, 8, 9, 0],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
-
+"""
 
 # 25 x 25
-a = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+image = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 3, 2, 1, 7, 8, 0, 6, 0, 0, 0, 3, 2, 1, 7, 8, 0, 6, 0, 0, 0, 3, 2, 1, 0],
               [0, 1, 1, 2,10, 2, 0, 0, 1, 1, 0, 1, 4, 3, 0, 1, 7, 4, 3, 0, 1, 1, 4, 3, 0],
               [0, 1, 2, 1, 6, 3, 1, 5, 8, 3, 0, 2, 3, 2, 2, 1, 0, 2, 3, 2, 2, 1, 0, 1, 0],
@@ -102,7 +100,8 @@ a = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
               [1, 5, 8, 3, 0, 1, 1, 1, 1, 0, 3, 1, 5, 0, 1, 3, 5, 3, 1, 3, 5, 9, 5, 1, 0],
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
 
-#19 x 19
+"""
+# 19 x 19
 image = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 3, 2, 1, 7, 8, 0, 6, 0, 0, 0, 3, 2, 1, 7, 0, 1, 0, 0],
                   [0, 1, 1, 2,10, 2, 0, 0, 1, 1, 0, 1, 4, 3, 0, 5, 5, 0, 0],
@@ -149,21 +148,18 @@ a = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 1, 3, 5, 3, 3, 1, 2, 0],
               [0, 0, 0, 1, 0, 3, 8, 7, 0, 6, 0],
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+"""
 
 # 5 x 5
 filter = np.array([[2, 2, 3, 1, 0],
-              [1, 3, 1, 5, 0],
-              [4, 0, 4, 1, 2],
-              [4, 0, 0, 0, 7],
-              [1, 0, 1, 9, 0]])
-"""
-
-filter = np.random.randint(0, 9, size=(3, 5, 5)) # channel, height, width
-#image = np.random.randint(0, 9, size=(3, 19, 19))
+                   [1, 3, 1, 5, 0],
+                   [4, 0, 4, 1, 2],
+                   [4, 0, 0, 0, 7],
+                   [1, 0, 1, 9, 0]])
 
 
-ofmap = conv2D(filter, image, stride=1)
-# ofmap, psum = conv3D(filter, image, stride=1)
+ofmap = conv2D(filter, image, stride=2)
+#ofmap, psum = conv3D(filter, image, stride=2)
 
 
 with open('filter.dat', 'w') as f:

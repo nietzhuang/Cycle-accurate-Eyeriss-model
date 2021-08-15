@@ -10,10 +10,10 @@ Afterwards, if there's enough time, I'll transpote it into verilog HDL to comple
 
 
 Current Progress:
-Modify the script how testbench choose test patterns to make verification more convienient and easier.
+Solved the problem of stack size overflow. Now, support computation when stride larger than 1 and add several related patterns.
 
 Next Progress:
-Encounter a problem of stack size overflow when pattern is large at function void SCHEDULER::ifmap_scheduling(void), have to fix it. 
+When the data of a layer is large amount, data in local buffer is missing. 
 
 
 

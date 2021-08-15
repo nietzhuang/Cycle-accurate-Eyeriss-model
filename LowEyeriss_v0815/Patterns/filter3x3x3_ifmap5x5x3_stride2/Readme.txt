@@ -1,0 +1,1 @@
+Verify stride larger than 1 in normal condition.

@@ -4,34 +4,35 @@ import numpy as np
 def conv3D(filter, image, stride):
     channel_number, filter_height, filter_width = filter.shape
     channel_number, image_height, image_width = image.shape
-    ofmap_height = image_height - filter_height + stride
-    ofmap_width = image_width - filter_width + stride
+    ofmap_height = int((image_height - filter_height + stride) / stride)
+    ofmap_width = int((image_width - filter_width + stride) / stride)
 
     psum = np.zeros((channel_number, ofmap_height, ofmap_width))
     for ch in range(channel_number):
         for i in range(ofmap_height):
             for j in range(ofmap_width):
-                ofpsum = np.multiply(filter[ch, :, :], image[ch, 0+i:filter_height+i, 0+j:filter_width+j])
+                ofpsum = np.multiply(filter[ch, :, :], image[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
                 psum[ch ,i, j] =  sum(sum(ofpsum))
                 ofmap = sum(psum)
 
     return ofmap, psum
 
 # Set parameters
-pattern_name    = 3  #'test'
+pattern_name    = 'filter11x11x3_ifmap161x161x3_stride2'
 channels        = 3
-filter_height   = 5
-filter_width    = 5
-ifmap_height    = 34
-ifmap_width     = 34
-ofmap_height    = ifmap_height - filter_height + 1
-ofmap_width     = ifmap_width - filter_width + 1
+filter_height   = 11
+filter_width    = 11
+ifmap_height    = 161
+ifmap_width     = 161
+stride          = 2
+ofmap_height    = int((ifmap_height - filter_height + stride) / stride)
+ofmap_width     = int((ifmap_width - filter_width + stride) / stride)
 
 
 os.chdir('Patterns')
 filter = np.random.randint(0, 2, size=(channels, filter_height, filter_width)) # channel, height, width
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
-ofmap, psum = conv3D(filter, image, stride=1)
+ofmap, psum = conv3D(filter, image, stride=stride)
 
 filename_filter = "filter_random" + str(pattern_name) + ".dat"
 filename_filter_C = "filter_rand" + str(pattern_name) + "_C++.dat"
