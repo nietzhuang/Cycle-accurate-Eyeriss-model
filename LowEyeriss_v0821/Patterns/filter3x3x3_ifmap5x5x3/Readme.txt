@@ -1,0 +1,1 @@
+Verify multiple channels in normal condition.

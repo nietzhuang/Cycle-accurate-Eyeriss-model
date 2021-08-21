@@ -10,10 +10,10 @@ Afterwards, if there's enough time, I'll transpote it into verilog HDL to comple
 
 
 Current Progress:
-Solved the problem of stack size overflow. Now, support computation when stride larger than 1 and add several related patterns.
+Support multiple filters. Layer shape as the same as 1st layer in AlexNet is computed well.
 
 Next Progress:
-When the data of a layer is large amount, data in local buffer is missing. 
+Design configuration register bank so that acclerator can reconfigure before each layers.
 
 
 

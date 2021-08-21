@@ -1,0 +1,1 @@
+Verify stide larger than 1 in lack of PEs condition.

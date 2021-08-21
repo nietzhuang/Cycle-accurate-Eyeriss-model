@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>97</LINE>
+      <COLUMN>5</COLUMN>
+    </SFA>
+    <DEFECTCODE>6294</DEFECTCODE>
+    <DESCRIPTION>Ill-defined for-loop:  initial condition does not satisfy test.  Loop body not executed.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::weight_scheduling</FUNCTION>
+    <DECORATED>?weight_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>37</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>91</LINE>
+      <COLUMN>21</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::weight_scheduling</FUNCTION>
+    <DECORATED>?weight_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>37</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>91</LINE>
+      <COLUMN>50</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::weight_scheduling</FUNCTION>
+    <DECORATED>?weight_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>37</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>112</LINE>
+      <COLUMN>26</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::weight_scheduling</FUNCTION>
+    <DECORATED>?weight_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>37</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>112</LINE>
+      <COLUMN>54</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::weight_scheduling</FUNCTION>
+    <DECORATED>?weight_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>37</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>242</LINE>
+      <COLUMN>5</COLUMN>
+    </SFA>
+    <DEFECTCODE>6294</DEFECTCODE>
+    <DESCRIPTION>Ill-defined for-loop:  initial condition does not satisfy test.  Loop body not executed.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::ifmap_scheduling</FUNCTION>
+    <DECORATED>?ifmap_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>184</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>236</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::ifmap_scheduling</FUNCTION>
+    <DECORATED>?ifmap_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>184</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>236</LINE>
+      <COLUMN>49</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::ifmap_scheduling</FUNCTION>
+    <DECORATED>?ifmap_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>184</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>261</LINE>
+      <COLUMN>26</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::ifmap_scheduling</FUNCTION>
+    <DECORATED>?ifmap_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>184</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\</FILEPATH>
+      <FILENAME>Scheduler.cpp</FILENAME>
+      <LINE>261</LINE>
+      <COLUMN>54</COLUMN>
+    </SFA>
+    <DEFECTCODE>6326</DEFECTCODE>
+    <DESCRIPTION>Potential comparison of a constant with another constant.</DESCRIPTION>
+    <FUNCTION>SCHEDULER::ifmap_scheduling</FUNCTION>
+    <DECORATED>?ifmap_scheduling@SCHEDULER@@QAEXXZ</DECORATED>
+    <FUNCLINE>184</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
