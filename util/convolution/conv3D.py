@@ -25,13 +25,13 @@ def conv3D(filter, image, stride, padding):
     return ofmap, psum
 
 # Set parameters
-pattern_name    = 'filter3x3x1_ifmap5x5x1_pad1'
+pattern_name    = 'filter11x11x1_ifmap81x81x1'
 channels        = 1
 filter_num      = 1
-filter_height   = 3
-filter_width    = 3
-ifmap_height    = 5
-ifmap_width     = 5
+filter_height   = 11
+filter_width    = 11
+ifmap_height    = 81
+ifmap_width     = 81
 stride          = 1
 padding         = 2
 ofmap_height    = int((ifmap_height - filter_height + padding*2 + stride) / stride)

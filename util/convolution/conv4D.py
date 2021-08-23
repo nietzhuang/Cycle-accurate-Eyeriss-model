@@ -1,12 +1,16 @@
 import os
 import numpy as np
 
-def conv4D(filter, image, stride):
+def conv4D(filter, image, stride, padding):
     channel_number, filter_num, filter_height, filter_width = filter.shape
     channel_number, image_height, image_width = image.shape
-    ofmap_height = int((image_height - filter_height + stride) / stride)
-    ofmap_width  = int((image_width - filter_width + stride) / stride)
+    ofmap_height = int((image_height - filter_height + padding*2 + stride) / stride)
+    ofmap_width = int((image_width - filter_width + padding*2 + stride) / stride)
     ofmap_num    = filter_num
+
+    if padding > 0:
+        image_pad = np.zeros((channel_number, image_height+padding*2, image_width+padding*2))
+        image_pad[:, padding:-padding, padding:-padding] = image
 
     ofmap = np.zeros((ofmap_num, ofmap_height, ofmap_width))
     psum = np.zeros((ofmap_num, channel_number, ofmap_height, ofmap_width))
@@ -14,23 +18,27 @@ def conv4D(filter, image, stride):
         for ch in range(channel_number):
             for i in range(ofmap_height):
                 for j in range(ofmap_width):
-                    ofpsum = np.multiply(filter[ch, fil_num, :, :], image[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
+                    if padding > 0:
+                        ofpsum = np.multiply(filter[ch, fil_num, :, :], image_pad[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
+                    else:
+                        ofpsum = np.multiply(filter[ch, fil_num, :, :], image[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
                     psum[fil_num, ch ,i, j] = sum(sum(ofpsum))
         ofmap[fil_num] = sum(psum[fil_num, :, :, :])
 
     return ofmap, psum
 
 # Set parameters
-pattern_name    = 'test'
+pattern_name    = 'filter5x5x3x2_imagee81x81x3_stride2_pad2'
 channels        = 3
 filter_num      = 2
 filter_height   = 5
 filter_width    = 5
-ifmap_height    = 35
-ifmap_width     = 35
+ifmap_height    = 81
+ifmap_width     = 81
 stride          = 2
-ofmap_height    = int((ifmap_height - filter_height + stride) / stride)
-ofmap_width     = int((ifmap_width - filter_width + stride) / stride)
+padding         = 2
+ofmap_height    = int((ifmap_height - filter_height + padding*2 + stride) / stride)
+ofmap_width     = int((ifmap_width - filter_width + padding*2 + stride) / stride)
 ofmap_channels  = filter_num
 
 # Define filename
@@ -47,7 +55,7 @@ filename_psum_C = "psum_" + str(pattern_name) + "_C++.dat"
 os.chdir('Patterns')
 filter = np.random.randint(0, 2, size=(channels, filter_num, filter_height, filter_width)) # channel, height, width
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
-ofmap, psum = conv4D(filter, image, stride=stride)
+ofmap, psum = conv4D(filter, image, stride=stride, padding=padding)
 
 
 # Write data in shape
