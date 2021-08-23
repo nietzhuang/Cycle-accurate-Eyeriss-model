@@ -58,6 +58,38 @@ image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
 ofmap, psum = conv4D(filter, image, stride=stride, padding=padding)
 
 
+# Write configuration bits
+layer_bw            = 2
+dataflow_bw         = 2
+padding_bw          = 2
+stride_bw           = 2
+filter_num_bw       = 10
+channels_bw         = 10
+ifmap_width_bw      = 10
+ifmap_height_bw     = 10
+filter_width_bw     = 4
+filter_height_bw    = 4
+
+config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
+              padding_bw - stride_bw - filter_num_bw - \
+              channels_bw - ifmap_width_bw - ifmap_height_bw - \
+              filter_width_bw - filter_height_bw) + \
+              '0' * layer_bw + \
+              '0' * dataflow_bw + \
+              '{0:02b}'.format(padding) + \
+              '{0:02b}'.format(stride) + \
+              '{0:010b}'.format(filter_num) + \
+              '{0:010b}'.format(channels) + \
+              '{0:010b}'.format(ifmap_width) + \
+              '{0:010b}'.format(ifmap_height) + \
+              '{0:04b}'.format(filter_width) + \
+              '{0:04b}'.format(filter_height)
+
+conf = open(filename_config, 'w')
+conf.write(config_reg)
+conf.close()
+
+
 # Write data in shape
 with open(filename_filter, 'w') as f:
     f.write("Channel: 0\n")

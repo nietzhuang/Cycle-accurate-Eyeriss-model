@@ -28,15 +28,18 @@ def conv3D(filter, image, stride, padding):
 pattern_name    = 'filter11x11x1_ifmap81x81x1'
 channels        = 1
 filter_num      = 1
-filter_height   = 11
-filter_width    = 11
-ifmap_height    = 81
-ifmap_width     = 81
+filter_height   = 3
+filter_width    = 3
+ifmap_height    = 5
+ifmap_width     = 5
 stride          = 1
-padding         = 2
+padding         = 0
 ofmap_height    = int((ifmap_height - filter_height + padding*2 + stride) / stride)
 ofmap_width     = int((ifmap_width - filter_width + padding*2 + stride) / stride)
 ofmap_channels  = filter_num
+
+dataflow        = 'RS'
+layer           = 'conv'
 
 # Define filename
 filename_filter = "filter_" + str(pattern_name) + ".dat"
@@ -47,12 +50,46 @@ filename_ofmap = "ofmap_" + str(pattern_name) + ".dat"
 filename_ofmap_C = "ofmap_" + str(pattern_name) + "_C++.dat"
 filename_psum = "psum_" + str(pattern_name) + ".dat"
 filename_psum_C = "psum_" + str(pattern_name) + "_C++.dat"
+filename_config = "config_" + str(pattern_name) + ".dat"
 
 
 os.chdir('Patterns')
 filter = np.random.randint(0, 2, size=(channels, filter_height, filter_width)) # channel, height, width
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
 ofmap, psum = conv3D(filter, image, stride=stride, padding=padding)
+
+
+# Write configuration bits
+layer_bw            = 2
+dataflow_bw         = 2
+padding_bw          = 2
+stride_bw           = 2
+filter_num_bw       = 10
+channels_bw         = 10
+ifmap_width_bw      = 10
+ifmap_height_bw     = 10
+filter_width_bw     = 4
+filter_height_bw    = 4
+
+config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
+              padding_bw - stride_bw - filter_num_bw - \
+              channels_bw - ifmap_width_bw - ifmap_height_bw - \
+              filter_width_bw - filter_height_bw) + \
+              '0' * layer_bw + \
+              '0' * dataflow_bw + \
+              '{0:02b}'.format(padding) + \
+              '{0:02b}'.format(stride) + \
+              '{0:010b}'.format(filter_num) + \
+              '{0:010b}'.format(channels) + \
+              '{0:010b}'.format(ifmap_width) + \
+              '{0:010b}'.format(ifmap_height) + \
+              '{0:04b}'.format(filter_width) + \
+              '{0:04b}'.format(filter_height)
+
+conf = open(filename_config, 'w')
+conf.write(config_reg)
+conf.close()
+
 
 
 # Write data in shape
@@ -129,3 +166,7 @@ try:
     shutil.move("./"+ filename_psum_C, "./Convert2C++/.")
 except:
     os.replace("./"+ filename_psum_C, "./Convert2C++/" + filename_psum_C)
+try:
+    shutil.move("./"+ filename_config, "./Convert2C++/.")
+except:
+    os.replace("./"+ filename_config, "./Convert2C++/" + filename_config)
