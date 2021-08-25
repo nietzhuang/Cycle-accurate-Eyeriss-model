@@ -1,5 +1,0 @@
-C:\Users\訪客\source\repos\LowEyeriss(Transfer_0919)\Debug\LowEyeriss.exe
-C:\Users\訪客\source\repos\LowEyeriss(Transfer_XXXX)\Debug\LowEyeriss.exe
-C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss(Transfer_0729)\Debug\LowEyeriss.exe
-C:\Users\nietzhuang\source\repos\LowEyeriss\LowEyeriss\Debug\LowEyeriss.exe
-C:\Users\nietzhuang\source\repos\LowEyeriss\Debug\LowEyeriss.exe

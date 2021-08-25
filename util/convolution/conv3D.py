@@ -25,14 +25,14 @@ def conv3D(filter, image, stride, padding):
     return ofmap, psum
 
 # Set parameters
-pattern_name    = 'filter11x11x1_ifmap81x81x1'
-channels        = 1
+pattern_name    = 'filter3x3x3_ifmap5x5x3_stride2'
+channels        = 3
 filter_num      = 1
 filter_height   = 3
 filter_width    = 3
 ifmap_height    = 5
 ifmap_width     = 5
-stride          = 1
+stride          = 2
 padding         = 0
 ofmap_height    = int((ifmap_height - filter_height + padding*2 + stride) / stride)
 ofmap_width     = int((ifmap_width - filter_width + padding*2 + stride) / stride)
@@ -62,8 +62,8 @@ ofmap, psum = conv3D(filter, image, stride=stride, padding=padding)
 # Write configuration bits
 layer_bw            = 2
 dataflow_bw         = 2
-padding_bw          = 2
-stride_bw           = 2
+padding_bw          = 3
+stride_bw           = 3
 filter_num_bw       = 10
 channels_bw         = 10
 ifmap_width_bw      = 10
@@ -77,8 +77,8 @@ config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
               filter_width_bw - filter_height_bw) + \
               '0' * layer_bw + \
               '0' * dataflow_bw + \
-              '{0:02b}'.format(padding) + \
-              '{0:02b}'.format(stride) + \
+              '{0:03b}'.format(padding) + \
+              '{0:03b}'.format(stride) + \
               '{0:010b}'.format(filter_num) + \
               '{0:010b}'.format(channels) + \
               '{0:010b}'.format(ifmap_width) + \
@@ -86,8 +86,12 @@ config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
               '{0:04b}'.format(filter_width) + \
               '{0:04b}'.format(filter_height)
 
+
+#print(config_reg)
+#config_reg_rv = config_reg[::-1]
 conf = open(filename_config, 'w')
-conf.write(config_reg)
+for bit in config_reg:
+    conf.write(bit +"\n")
 conf.close()
 
 

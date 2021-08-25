@@ -10,10 +10,10 @@ Afterwards, if there's enough time, I'll transpote it into verilog HDL to comple
 
 
 Current Progress:
-Support multiple filters. Layer shape as the same as 1st layer in AlexNet is computed well.
+Now, LowEyeriss is configurable. 1st layer is computed after the configuration register is set and checked done.
 
 Next Progress:
-Design configuration register bank so that acclerator can reconfigure before each layers.
+Forward the computation to next layer, which is maximum pooling layer. Design computation scheme and corresponding dataflow for pooling.
 
 
 
