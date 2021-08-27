@@ -37,9 +37,8 @@ padding         = 0
 ofmap_height    = int((ifmap_height - filter_height + padding*2 + stride) / stride)
 ofmap_width     = int((ifmap_width - filter_width + padding*2 + stride) / stride)
 ofmap_channels  = filter_num
-
 dataflow        = 'RS'
-layer           = 'conv'
+layer           = 'CONV'
 
 # Define filename
 filename_filter = "filter_" + str(pattern_name) + ".dat"
@@ -70,13 +69,15 @@ ifmap_width_bw      = 10
 ifmap_height_bw     = 10
 filter_width_bw     = 4
 filter_height_bw    = 4
+Dataflow            = {'WS': 0, 'IS': 1, 'OS': 2, 'RS': 3}
+LayerType           = {'CONV': 0, 'MAX': 1, 'FC': 2}
 
 config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
               padding_bw - stride_bw - filter_num_bw - \
               channels_bw - ifmap_width_bw - ifmap_height_bw - \
               filter_width_bw - filter_height_bw) + \
-              '0' * layer_bw + \
-              '0' * dataflow_bw + \
+              '{0:02b}'.format(LayerType[layer]) + \
+              '{0:02b}'.format(Dataflow[dataflow]) + \
               '{0:03b}'.format(padding) + \
               '{0:03b}'.format(stride) + \
               '{0:010b}'.format(filter_num) + \
@@ -86,14 +87,10 @@ config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
               '{0:04b}'.format(filter_width) + \
               '{0:04b}'.format(filter_height)
 
-
-#print(config_reg)
-#config_reg_rv = config_reg[::-1]
 conf = open(filename_config, 'w')
 for bit in config_reg:
     conf.write(bit +"\n")
 conf.close()
-
 
 
 # Write data in shape

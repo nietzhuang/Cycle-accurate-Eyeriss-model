@@ -1,6 +1,29 @@
 import os
 import numpy as np
 
+def conv3D(filter, image, stride, padding):
+    channel_number, filter_height, filter_width = filter.shape
+    channel_number, image_height, image_width = image.shape
+    ofmap_height = int((image_height - filter_height + padding*2 + stride) / stride)
+    ofmap_width = int((image_width - filter_width + padding*2 + stride) / stride)
+
+    if padding > 0:
+        image_pad = np.zeros((channel_number, image_height+padding*2, image_width+padding*2))
+        image_pad[:, padding:-padding, padding:-padding] = image
+
+    psum = np.zeros((channel_number, ofmap_height, ofmap_width))
+    for ch in range(channel_number):
+        for i in range(ofmap_height):
+            for j in range(ofmap_width):
+                if padding > 0:
+                    ofpsum = np.multiply(filter[ch, :, :], image_pad[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
+                else:
+                    ofpsum = np.multiply(filter[ch, :, :], image[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
+                psum[ch ,i, j] =  sum(sum(ofpsum))
+    ofmap = sum(psum)
+
+    return ofmap, psum
+
 def conv4D(filter, image, stride, padding):
     channel_number, filter_num, filter_height, filter_width = filter.shape
     channel_number, image_height, image_width = image.shape
@@ -27,21 +50,54 @@ def conv4D(filter, image, stride, padding):
 
     return ofmap, psum
 
+def maxpool(pool_size, image, stride, padding):
+    pool_height, pool_width = pool_size
+    channel_number, image_height, image_width = image.shape
+    ofmap_height = int((image_height - pool_height + padding*2 + stride) / stride)
+    ofmap_width = int((image_width - pool_width + padding*2 + stride) / stride)
+
+    if padding > 0:
+        image_pad = np.zeros((channel_number, image_height+padding*2, image_width+padding*2))
+        image_pad[:, padding:-padding, padding:-padding] = image
+
+    psum = np.zeros((channel_number, ofmap_height, ofmap_width))
+    ofpsum = np.zeros((ofmap_height, ofmap_width))
+    for ch in range(channel_number):
+        for i in range(ofmap_height):
+            for j in range(ofmap_width):
+                if padding > 0:
+                    ofpsum = np.multiply(filter[ch, :, :], image_pad[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
+                else:
+                    ofpsum[i, j] = np.amax(image[ch, 0+i*stride:pool_height+i*stride, 0+j*stride:pool_width+j*stride])
+        psum[ch ,:, :] =  ofpsum
+    ofmap = psum
+
+    return ofmap, psum
+
+
+
+
+
+
 # Set parameters
-pattern_name    = 'filter3x3x1x3_image5x5x1'
-channels        = 1
-filter_num      = 3
-filter_height   = 3
-filter_width    = 3
-ifmap_height    = 5
-ifmap_width     = 5
-stride          = 1
-padding         = 0
-ofmap_height    = int((ifmap_height - filter_height + padding*2 + stride) / stride)
-ofmap_width     = int((ifmap_width - filter_width + padding*2 + stride) / stride)
-ofmap_channels  = filter_num
-dataflow        = 'RS'
-layer           = 'CONV'
+pattern_name                = 'max'
+dataflow                    = 'RS'
+layer                       = 'MAX'
+channels                    = 2
+filter_num                  = 1
+filter_height, filter_width = (3, 3)
+ifmap_height, ifmap_width   = (6, 6)
+pool_height, pool_width     = (2, 2)
+stride                      = 2
+padding                     = 0
+if layer == 'CONV':
+    ofmap_height            = int((ifmap_height - filter_height + padding*2 + stride) / stride)
+    ofmap_width             = int((ifmap_width - filter_width + padding*2 + stride) / stride)
+    ofmap_channels          = filter_num
+elif layer == 'MAX':
+    ofmap_height            = int((ifmap_height - pool_height + padding*2 + stride) / stride)
+    ofmap_width             = int((ifmap_width - pool_width + padding*2 + stride) / stride)
+    ofmap_channels          = channels 
 
 # Define filename
 filename_filter = "filter_" + str(pattern_name) + ".dat"
@@ -56,9 +112,25 @@ filename_config = "config_" + str(pattern_name) + ".dat"
 
 
 os.chdir('Patterns')
+"""
+# 3D Convolution
+filter = np.random.randint(0, 2, size=(channels, filter_height, filter_width)) # channel, height, width
+image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
+ofmap, psum = conv3D(filter, image, stride=stride, padding=padding)
+print(ofmap)
+"""
+"""
+# 4D Convolution
 filter = np.random.randint(0, 2, size=(channels, filter_num, filter_height, filter_width)) # channel, height, width
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
 ofmap, psum = conv4D(filter, image, stride=stride, padding=padding)
+"""
+
+# Maxpooling
+filter = np.zeros((channels, filter_height, filter_width))
+image = np.random.randint(0, 10, size=(channels, ifmap_height, ifmap_width))
+ofmap, psum = maxpool((2,2), image, stride=stride, padding=padding)
+print(psum)
 
 
 
