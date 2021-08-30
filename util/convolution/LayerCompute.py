@@ -97,12 +97,12 @@ dataflow                    = 'RS'
 layer                       = 'FC'
 channels                    = 3
 filter_num                  = 1
+units                       = 5
 filter_height, filter_width = (3, 3)
 ifmap_height, ifmap_width   = (3, 3)
 pool_height, pool_width     = (2, 2)
 stride                      = 2
 padding                     = 0
-units                       = 5
 if layer == 'CONV':
     ofmap_height            = int((ifmap_height - filter_height + padding*2 + stride) / stride)
     ofmap_width             = int((ifmap_width - filter_width + padding*2 + stride) / stride)
@@ -155,6 +155,7 @@ layer_bw            = 2
 dataflow_bw         = 2
 padding_bw          = 3
 stride_bw           = 3
+units_bw            = 10
 filter_num_bw       = 10
 channels_bw         = 10
 ifmap_width_bw      = 10
@@ -164,14 +165,16 @@ filter_height_bw    = 4
 Dataflow            = {'ＯS': 0, 'WS': 1, 'IS': 2, 'RS': 3}
 LayerType           = {'CONV': 0, 'MAX': 1, 'FC': 2}
 
-config_reg =  '0' * (64 - layer_bw - dataflow_bw - \
-              padding_bw - stride_bw - filter_num_bw - \
-              channels_bw - ifmap_width_bw - ifmap_height_bw - \
+config_reg =  '0' * (32*3 - layer_bw - dataflow_bw - \
+              padding_bw - stride_bw - \
+              units_bw - filter_num_bw - channels_bw - \
+              ifmap_width_bw - ifmap_height_bw - \
               filter_width_bw - filter_height_bw) + \
               '{0:02b}'.format(LayerType[layer]) + \
               '{0:02b}'.format(Dataflow[dataflow]) + \
               '{0:03b}'.format(padding) + \
               '{0:03b}'.format(stride) + \
+              '{0:010b}'.format(units) + \
               '{0:010b}'.format(filter_num) + \
               '{0:010b}'.format(channels) + \
               '{0:010b}'.format(ifmap_width) + \
