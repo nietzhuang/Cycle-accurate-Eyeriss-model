@@ -78,16 +78,11 @@ def dense(units, weight, image):
     channel_number, image_height, image_width = image.shape
     weight_unit, _, _, _ = weight.shape
     image = np.reshape(image, (channel_number*image_height*image_width))
-    print(image)
-    print('\n')
     weight = np.reshape(weight, (units, channel_number*image_height*image_width))
-    print(weight)
 
     output = np.zeros((units, 1))
     for unit in range(units):
         for idx in range(channel_number*image_height*image_width):
-            print(image[idx])
-            print(weight[unit, idx])
             output[unit] += image[idx] * weight[unit, idx]
 
     return output
@@ -153,8 +148,6 @@ filter = np.random.randint(0, 10, size=(units, channels, ifmap_height, ifmap_wid
 image =  np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
 psum = np.zeros((units, 1))
 ofmap = dense(units, filter, image)
-print(ofmap)
-
 
 
 # Write configuration bits
