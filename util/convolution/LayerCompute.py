@@ -77,22 +77,20 @@ def maxpool(pool_size, image, stride, padding):
 def dense(units, weight, image):
     channel_number, image_height, image_width = image.shape
     weight_unit, _, _, _ = weight.shape
-    image = np.reshape(image, (channel_number*image_height*image_width))
-    weight = np.reshape(weight, (units, channel_number*image_height*image_width))
 
+    psum = np.zeros((channel_number, units))
     output = np.zeros((units, 1))
-    for unit in range(units):
-        for idx in range(channel_number*image_height*image_width):
-            output[unit] += image[idx] * weight[unit, idx]
+    for ch in range(channel_number):
+        for unit in range(units):
+            psum[ch, unit] = sum(sum(np.multiply(weight[unit, ch, :, :], image[ch, :, :])))
 
-    return output
-
-
+    output = sum(psum)
+    return output, psum
 
 
 
 # Set parameters
-pattern_name                = 'fc_test'
+pattern_name                = 'fc3x3x3_image3x3x3_units5'
 dataflow                    = 'RS'
 layer                       = 'FC'
 channels                    = 3
@@ -101,16 +99,21 @@ units                       = 5
 filter_height, filter_width = (3, 3)
 ifmap_height, ifmap_width   = (3, 3)
 pool_height, pool_width     = (2, 2)
-stride                      = 2
+stride                      = 3
 padding                     = 0
 if layer == 'CONV':
     ofmap_height            = int((ifmap_height - filter_height + padding*2 + stride) / stride)
     ofmap_width             = int((ifmap_width - filter_width + padding*2 + stride) / stride)
     ofmap_channels          = filter_num
+elif layer == 'FC':
+    ofmap_height            = units
+    ofmap_width             = 1
+    ofmap_channels          = 1
 elif layer == 'MAX':
     ofmap_height            = int((ifmap_height - pool_height + padding*2 + stride) / stride)
     ofmap_width             = int((ifmap_width - pool_width + padding*2 + stride) / stride)
     ofmap_channels          = channels
+
 
 # Define filename
 filename_filter = "filter_" + str(pattern_name) + ".dat"
@@ -144,10 +147,9 @@ image = np.random.randint(0, 10, size=(channels, ifmap_height, ifmap_width))
 ofmap, psum = maxpool((2,2), image, stride=stride, padding=padding)
 """
 # Fully-connected
-filter = np.random.randint(0, 10, size=(units, channels, ifmap_height, ifmap_width))
+filter = np.random.randint(0, 2, size=(units, channels, ifmap_height, ifmap_width))
 image =  np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
-psum = np.zeros((units, 1))
-ofmap = dense(units, filter, image)
+ofmap, psum = dense(units, filter, image)
 
 
 # Write configuration bits
@@ -196,7 +198,6 @@ with open(filename_filter, 'w') as f:
     else:
         f.write("Perceptron: 0\n")
         f.write("\n\n\nPerceptron: \n".join(map(str, filter)))
-
 f.close()
 
 with open(filename_image, 'w') as im:
@@ -205,13 +206,20 @@ with open(filename_image, 'w') as im:
 im.close()
 
 with open(filename_ofmap, 'w') as om:
-    om.write("Channel\n")
-    om.write("\n\n\nChannel\n".join(map(str, ofmap)))
+    if layer != 'FC':
+        om.write("Channel\n")
+        om.write("\n\n\nChannel\n".join(map(str, ofmap)))
+    else:
+        om.write(str(ofmap))
 om.close()
 
 with open(filename_psum, 'w') as p:
-    p.write("ofmap number: 0\n")
-    p.write("\n\n\nofmap number: \n".join(map(str, psum)))
+    if layer != 'FC':
+        p.write("ofmap number: 0\n")
+        p.write("\n\n\nofmap number: \n".join(map(str, psum)))
+    else:
+        p.write("Channel\n")
+        p.write("\n\n\nChannel\n".join(map(str, psum)))
 p.close()
 
 
@@ -238,7 +246,7 @@ im.close()
 
 if layer != 'FC':
     ofmap_tmp = np.zeros((ofmap_channels, ofmap_height*ofmap_width))
-    ofmap = np.reshape(ofmap, (ofmap_channels*ofmap_height*ofmap_width))
+    ofmap = np.reshape(ofmap, (ofmap_channels**ofmap_width))
     for ch in range(ofmap_channels):  # Arrange it in shape as next feature map
         ofmap_tmp[ch][:] = ofmap[ch*ofmap_height*ofmap_width : (ch+1)*ofmap_height*ofmap_width]
         ofmap = np.rot90(ofmap_tmp, 3)
@@ -252,9 +260,11 @@ if layer != 'FC':
     psum = np.reshape(psum, (filter_num, channels, ofmap_height*ofmap_width))
     for fil_num in range(filter_num): # Arrange it as the shape row, coloumn in terms of psum data, channels
         psum_tmp[fil_num*ofmap_height*ofmap_width:(fil_num+1)*ofmap_height*ofmap_width][:] = psum[fil_num][:][:].T
-    p = open(filename_psum_C, 'w')
-    np.savetxt(p, psum_tmp, fmt='%d')  # Save psum in terms of psum and channel in row versus column.
-    p.close()
+else:
+    psum_tmp = psum.T
+p = open(filename_psum_C, 'w')
+np.savetxt(p, psum_tmp, fmt='%d')  # Save psum in terms of psum and channel in row versus column.
+p.close()
 
 
 # Arrange data path
@@ -270,11 +280,10 @@ try:
     shutil.move("./"+ filename_ofmap_C, "./Convert2C++/.")
 except:
     os.replace("./"+ filename_ofmap_C, "./Convert2C++/" + filename_ofmap_C)
-if layer != 'FC':
-    try:
-        shutil.move("./"+ filename_psum_C, "./Convert2C++/.")
-    except:
-        os.replace("./"+ filename_psum_C, "./Convert2C++/" + filename_psum_C)
+try:
+    shutil.move("./"+ filename_psum_C, "./Convert2C++/.")
+except:
+    os.replace("./"+ filename_psum_C, "./Convert2C++/" + filename_psum_C)
 try:
     shutil.move("./"+ filename_config, "./Convert2C++/.")
 except:
