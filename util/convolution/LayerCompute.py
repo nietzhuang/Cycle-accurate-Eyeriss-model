@@ -66,7 +66,7 @@ def maxpool(pool_size, image, stride, padding):
         for i in range(ofmap_height):
             for j in range(ofmap_width):
                 if padding > 0:
-                    ofpsum = np.multiply(filter[ch, :, :], image_pad[ch, 0+i*stride:filter_height+i*stride, 0+j*stride:filter_width+j*stride])
+                    ofpsum[i, j] = np.amax(image_pad[ch, 0+i*stride:pool_height+i*stride, 0+j*stride:pool_width+j*stride])
                 else:
                     ofpsum[i, j] = np.amax(image[ch, 0+i*stride:pool_height+i*stride, 0+j*stride:pool_width+j*stride])
         psum[ch ,:, :] =  ofpsum
@@ -90,16 +90,16 @@ def dense(units, weight, image):
 
 
 # Set parameters
-pattern_name                = 'fc3x3x3_image3x3x3_units5'
+pattern_name                = 'fc7x7x3_image7x7x3_units14'
 dataflow                    = 'RS'
 layer                       = 'FC'
 channels                    = 3
 filter_num                  = 1
-units                       = 5
-filter_height, filter_width = (3, 3)
-ifmap_height, ifmap_width   = (3, 3)
-pool_height, pool_width     = (2, 2)
-stride                      = 3
+units                       = 14
+filter_height, filter_width = (7, 7)
+ifmap_height, ifmap_width   = (7, 7)
+pool_height, pool_width     = (3, 3)
+stride                      = 7
 padding                     = 0
 if layer == 'CONV':
     ofmap_height            = int((ifmap_height - filter_height + padding*2 + stride) / stride)
@@ -134,38 +134,38 @@ filter = np.random.randint(0, 2, size=(channels, filter_height, filter_width)) #
 image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
 ofmap, psum = conv3D(filter, image, stride=stride, padding=padding)
 """
-"""
-# 4D Convolution
-filter = np.random.randint(0, 2, size=(channels, filter_num, filter_height, filter_width)) # channel, height, width
-image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
-ofmap, psum = conv4D(filter, image, stride=stride, padding=padding)
-"""
-"""
-# Maxpooling
-filter = np.zeros((channels, filter_height, filter_width))
-image = np.random.randint(0, 10, size=(channels, ifmap_height, ifmap_width))
-ofmap, psum = maxpool((2,2), image, stride=stride, padding=padding)
-"""
-# Fully-connected
-filter = np.random.randint(0, 2, size=(units, channels, ifmap_height, ifmap_width))
-image =  np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
-ofmap, psum = dense(units, filter, image)
-
+if layer == 'CONV':
+    # 4D Convolution
+    filter = np.random.randint(0, 2, size=(channels, filter_num, filter_height, filter_width))
+    image = np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
+    ofmap, psum = conv4D(filter, image, stride=stride, padding=padding)
+elif layer == 'MAX':
+    # Maxpooling
+    filter = np.zeros((channels, filter_height, filter_width))
+    image = np.random.randint(0, 10, size=(channels, ifmap_height, ifmap_width))
+    ofmap, psum = maxpool((pool_height, pool_width), image, stride=stride, padding=padding)
+elif layer == 'FC':
+    # Fully-connected
+    filter = np.random.randint(0, 2, size=(units, channels, ifmap_height, ifmap_width))
+    image =  np.random.randint(0, 2, size=(channels, ifmap_height, ifmap_width))
+    ofmap, psum = dense(units, filter, image)
+else:
+    print('Warning: the type of layer is wrong.')
 
 # Write configuration bits
 layer_bw            = 2
 dataflow_bw         = 2
 padding_bw          = 3
-stride_bw           = 3
-units_bw            = 10
+stride_bw           = 7
+units_bw            = 13
 filter_num_bw       = 10
 channels_bw         = 10
 ifmap_width_bw      = 10
 ifmap_height_bw     = 10
 filter_width_bw     = 4
 filter_height_bw    = 4
-Dataflow            = {'ＯS': 0, 'WS': 1, 'IS': 2, 'RS': 3}
-LayerType           = {'CONV': 0, 'MAX': 1, 'FC': 2}
+Dataflow            = {'OS': 0, 'WS': 1, 'IS': 2, 'RS': 3}
+LayerType           = {'CONV': 0, 'MAX': 1, 'AVG': 2, 'FC': 3}
 
 config_reg =  '0' * (32*3 - layer_bw - dataflow_bw - \
               padding_bw - stride_bw - \
@@ -175,8 +175,8 @@ config_reg =  '0' * (32*3 - layer_bw - dataflow_bw - \
               '{0:02b}'.format(LayerType[layer]) + \
               '{0:02b}'.format(Dataflow[dataflow]) + \
               '{0:03b}'.format(padding) + \
-              '{0:03b}'.format(stride) + \
-              '{0:010b}'.format(units) + \
+              '{0:07b}'.format(stride) + \
+              '{0:013b}'.format(units) + \
               '{0:010b}'.format(filter_num) + \
               '{0:010b}'.format(channels) + \
               '{0:010b}'.format(ifmap_width) + \
@@ -246,11 +246,11 @@ im.close()
 
 if layer != 'FC':
     ofmap_tmp = np.zeros((ofmap_channels, ofmap_height*ofmap_width))
-    ofmap = np.reshape(ofmap, (ofmap_channels**ofmap_width))
+    ofmap = np.reshape(ofmap, (ofmap_channels*ofmap_height*ofmap_width))
     for ch in range(ofmap_channels):  # Arrange it in shape as next feature map
         ofmap_tmp[ch][:] = ofmap[ch*ofmap_height*ofmap_width : (ch+1)*ofmap_height*ofmap_width]
-        ofmap = np.rot90(ofmap_tmp, 3)
-        ofmap = np.fliplr(ofmap)
+    ofmap = np.rot90(ofmap_tmp, 3)
+    ofmap = np.fliplr(ofmap)
 om = open(filename_ofmap_C, 'w')
 np.savetxt(om, ofmap, fmt='%d')
 om.close()

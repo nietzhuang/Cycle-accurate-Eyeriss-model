@@ -1,0 +1,46 @@
+#ifndef Definition_H
+#define Definition_H
+// Set project names
+const char* const simulation_name	= "Low Eyeriss";
+const char* const pattern_name		= "fc12x12x1_image12x12x1_units60";
+
+// Set Testing options
+const bool check_psum = true;  // Set if checking each partial sum is needed. (Set false is recommended if pattern is large.)
+const bool check_conf = true;
+
+// Set Configuration bitwidth
+const int			conf_bit_bw		= 96;
+const int			conf_phase		= conf_bit_bw / 32;
+
+// Definition for NN layer 
+enum enum_LayerType { CONV = 0, MAX = 1, AVG = 2, FC = 3 };
+const int			layer			= FC;
+const int			num_channel		= 1;
+const int			num_filter		= 1;
+const int			stride			= 12;  // set as filter height when FC layer
+const int			padding			= 0;
+const int			units			= 60;  // set one when not FC layer.
+const int			filter_height	= 12;
+const int			filter_width	= 12;
+const int			ifmap_height	= 12;
+const int			ifmap_width		= 12;
+const int			ofmap_height	= (ifmap_height - filter_height + padding*2 + stride) * units / stride;  // units is used for FC layer.
+const int			ofmap_width		= (ifmap_width - filter_width + padding*2 + stride) / stride;
+const int			filter_size		= filter_height * filter_width;
+const long long int ifmap_size		= ifmap_height * ifmap_width;
+const int			ofmap_size		= ofmap_height * ofmap_width;
+
+// Definition for PE array
+enum enum_Dataflow  { OS = 0, WS = 1, IS = 2, RS = 3 };
+const int			PE_length		= 12;  // Generally decided by filter height.
+const int			PE_width		= 14;  // Generally decided by ofmap height.
+
+// Definition for dataflow detail
+const int			dataflow		= RS;
+const int			folding			= PE_length / filter_height;
+const int			propass			= ofmap_height / (PE_width * folding) + (ofmap_height % (PE_width * folding) > 0);
+
+// Definition for processing element.
+const int			spad_depth		= filter_height;  // Generally depends on filter height.
+
+#endif

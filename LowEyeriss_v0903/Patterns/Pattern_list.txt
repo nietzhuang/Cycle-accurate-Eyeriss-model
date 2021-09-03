@@ -1,0 +1,49 @@
+//==Normal condition==//
+filter5x5x1_ifmap18x18x1				// Verify the simplest pattern.
+filter3x3x3_ifmap5x5x3					// Verify multiple channels.
+filter3x3x3_ifmap5x5x3_stride2				// Verify stride larger than 1.
+filter3x3x1_ifmap5x5x1_pad1				// Verify padding larger than 1.
+filter3x3x1x3_image5x5x1				// Verify multiple filters.
+
+
+//==Lack of PE array size condition==//
+filter5x5x1_ifmap34x34x1				// Verify the simplest but lack of PE array size condition.
+filter5x5x3_ifmap34x34x3				// Verify multiple channels.
+filter5x5x1_ifmap35x35x1_stride2			// Verify stride larger than 1.
+filter11x11x1_ifmap81x81x1_pad2				// Verify padding.
+filter11x11x1x3_image81x81x1				// Verify multiple filters.
+filter5x5x3_ifmap81x81x3_stride2			// Verify stride larger than 1, folding larger than 1, multiple channels, and multiple processing passes.
+filter5x5x3x2_image81x81x3_stride2			// Verify stride larger than 1, folding larger than 1, multiple channels, mutiple filters and multiple processing passes.
+filter5x5x3x2_image81x81x3_stride2_pad2			// Verify stride larger than 1, folding larger than 1, padding, multiple channels, mutiple filters and multiple processing passes.
+filter11x11x3_ifmap161x161x3_stride4			// Verify very large layer.
+filter11x11x3_ifmap227x227x3_stride4			// Verify very large layer. //!! Substitute it with AlexNet 1st layer later on.
+
+
+
+//==Maximum pooling==//
+max3x3x1_ifmap42x42x1_stride3				// Verify the simplest pattern.
+max3x3x1_ifmap40x40x1_stride3_pad1			// Verify padding.
+max3x3x1_ifmap29x29x1_stride2				// Verify overlapping pooling.
+max3x3x3_ifmap90x90x3_stride3				// Verify lack of PE array size condition, and mutiple channels.
+max3x3x3_ifmap90x90x3_stride1 				// Verify lack of PE array size condition, and overlapping pooling.
+max3x3x1_ifmap122x122x1_stride3_pad2			// Verify lack of PE array size condition, and padding.
+max3x3x3_ifmap122x122x3_stride2_pad2			// Verify lack of PE array size condition, padding, overlapping pooling and multiple channels.
+max3x3x256_ifmap13x13x256_stride3_pad1			// Verify very large layer.  // !! Substitute it with AlexNet 5th layer later on.
+
+
+
+//==Fully-connected==//
+fc3x3x1_image3x3x1_units14				// Verify simplest pattern.
+fc7x7x3_image7x7x3_units14				// Verify multiple channels.
+fc12x12x1_image12x12x1_units60				// Verify lack of PE array condition.
+fc3x3x1_image3x3x1_units60				// Verify lack of PE array condition, folding larger than 1.
+fc5x5x5_image5x5x5_units100				// Verify lack of PE array condition, multiple channels, and folding larer than 1.
+fc6x6x256_image6x6x256_units4096 (failed)		// Verify very large layer, case of convolution to fc layer .
+fc8x8x64_image8x8x64_units4096 (fialed)			// Verify very large layer, case of fc to fc layer; flattern data has to reshape. 
+
+
+
+
+//==Unsupport condition==//
+// Verify if filter height or width is too large.
+// Verify if dataflow is unsupported.
