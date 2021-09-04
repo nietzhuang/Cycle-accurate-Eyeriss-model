@@ -17,11 +17,11 @@ SC_MODULE(PE) {
 	sc_in<	  bool		 >		in_vld;
 	sc_out<	  bool		 >		out_vld;
 	sc_in<	  sc_int<8>	 >		w_in;
-	sc_in<	  sc_int<8>	 >		ifmap_in;
+	sc_in<	  sc_int<8>  >		ifmap_in;
 	sc_out<   sc_uint<12>>		ofmap_out;  // input from MAC to PE, and output ouside.  
 
 	sc_signal< sc_int<8> >		weight;
-	sc_signal< sc_int<8> >		ifmap;
+	sc_signal< sc_int<8>>		ifmap;
 	sc_signal< sc_int<8> >		psum;
 	sc_signal<sc_uint<12>>		ofmap_mac;
 	sc_signal<sc_uint<12>>		ofmap_pool;

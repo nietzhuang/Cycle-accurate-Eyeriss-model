@@ -10,9 +10,25 @@ using namespace sc_dt;
 
 void CONFIGREG::config(void) {
 	sc_bv<conf_bit_bw>	configuration_reg;
+
+	// Declare configuration fields.
+	sc_uint<13>		units_field = 0;
+	sc_uint<7>		stride_field = 0;
+	sc_uint<3>		padding_field = 0;
+	sc_uint<4>		filter_height_field = 0;
+	sc_uint<4>		filter_width_field = 0;
+	sc_uint<10>		ifmap_height_field = 0;
+	sc_uint<10>		ifmap_width_field = 0;
+	sc_uint<32>		ofmap_height_field = 0;;
+	sc_uint<32>		ofmap_width_field = 0;;
+	sc_uint<8>		filter_size_field = 0;
+	sc_uint<20>		ifmap_size_field = 0;
+	sc_uint<20>		ofmap_size_field = 0;
+	sc_uint<32>		folding_field = 0;
+	sc_uint<32>		propass_field = 0;
+
 	bool check = check_conf;
 	int errors = 0;
-	
 
 	// Reset
 	if (rst.read()) {
@@ -81,28 +97,27 @@ void CONFIGREG::config(void) {
 					return;
 				}
 			}
-			int units_tmp = configuration_reg.range(60, 48).to_uint();
-			int	stride_tmp = configuration_reg.range(67, 61).to_uint();
-			int	padding_tmp = configuration_reg.range(70, 68).to_uint();
-			int filter_height_tmp = configuration_reg.range(3, 0).to_uint();
-			int filter_width_tmp = configuration_reg.range(7, 4).to_uint();
-			int ifmap_height_tmp = configuration_reg.range(17, 8).to_uint();
-			int ifmap_width_tmp = configuration_reg.range(27, 18).to_uint();
-			int ofmap_height_tmp;
-			int ofmap_width_tmp;
+			units_field = configuration_reg.range(60, 48).to_uint();
+			stride_field = configuration_reg.range(67, 61).to_uint();
+			padding_field = configuration_reg.range(70, 68).to_uint();
+			filter_height_field = configuration_reg.range(3, 0).to_uint();
+			filter_width_field = configuration_reg.range(7, 4).to_uint();
+			ifmap_height_field = configuration_reg.range(17, 8).to_uint();
+			ifmap_width_field = configuration_reg.range(27, 18).to_uint();
+
 			if (layer == FC) {
-				ofmap_height_tmp = units_tmp;
-				ofmap_width_tmp = 1;
+				ofmap_height_field = units_field;
+				ofmap_width_field = 1;
 			}
 			else {
-				ofmap_height_tmp = (ifmap_height_tmp - filter_height_tmp + padding_tmp * 2 + stride_tmp) / stride_tmp;
-				ofmap_width_tmp = (ifmap_width_tmp - filter_width_tmp + padding_tmp * 2 + +stride_tmp) / stride_tmp;
+				ofmap_height_field = (ifmap_height_field - filter_height_field + padding_field * 2 + stride_field) / stride_field;
+				ofmap_width_field = (ifmap_width_field - filter_width_field + padding_field * 2 + +stride_field) / stride_field;
 			}
-			int filter_size_tmp = filter_height_tmp * filter_width_tmp;
-			int ifmap_size_tmp = ifmap_height_tmp * ifmap_width_tmp;
-			int ofmap_size_tmp = ofmap_height_tmp * ofmap_width_tmp;
-			int folding_tmp = PE_length / filter_height_tmp;
-			int	propass_tmp = ofmap_height_tmp / (PE_width * folding_tmp) + (ofmap_height_tmp % (PE_width * folding_tmp) > 0);
+			filter_size_field = filter_height_field * filter_width_field;
+			ifmap_size_field = ifmap_height_field * ifmap_width_field;
+			ofmap_size_field = ofmap_height_field * ofmap_width_field;
+			folding_field = PE_length / filter_height_field;
+			propass_field = ofmap_height_field / (PE_width * folding_field) + (ofmap_height_field % (PE_width * folding_field) > 0);
 
 			// Write configuration of layer shape
 			filter_height_cf.write(configuration_reg.range(3, 0));
@@ -114,17 +129,17 @@ void CONFIGREG::config(void) {
 			units_cf.write(configuration_reg.range(60, 48));
 			stride_cf.write(configuration_reg.range(67, 61));
 			padding_cf.write(configuration_reg.range(70, 68));
-			filter_size_cf.write(filter_size_tmp);
-			ifmap_size_cf.write(ifmap_size_tmp);
-			ofmap_height_cf.write(ofmap_height_tmp);
-			ofmap_width_cf.write(ofmap_width_tmp);
-			ofmap_size_cf.write(ofmap_size_tmp);
+			filter_size_cf.write(filter_size_field);
+			ifmap_size_cf.write(ifmap_size_field);
+			ofmap_height_cf.write(ofmap_height_field);
+			ofmap_width_cf.write(ofmap_width_field);
+			ofmap_size_cf.write(ofmap_size_field);
 
 			// Write configuration of computation
 			dataflow_cf.write(configuration_reg.range(72, 71));
 			layer_cf.write(configuration_reg.range(74, 73));
-			folding_cf.write(folding_tmp);
-			propass_cf.write(propass_tmp);
+			folding_cf.write(folding_field);
+			propass_cf.write(propass_field);
 
 			conf_done.write(1);
 		}

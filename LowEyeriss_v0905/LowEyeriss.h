@@ -33,13 +33,14 @@ SC_MODULE(LOW_EYERISS) {
 	sc_signal< sc_bv<3> >		padding_cf;
 	sc_signal< sc_bv<2> >		dataflow_cf;
 	sc_signal< sc_bv<2> >		layer_cf;
-	sc_signal<sc_int<32>>		filter_size_cf;
-	sc_signal<sc_int<32>>		ifmap_size_cf;
-	sc_signal<sc_int<32>>		ofmap_height_cf;
-	sc_signal<sc_int<32>>		ofmap_width_cf;
-	sc_signal<sc_int<32>>		ofmap_size_cf;
-	sc_signal<sc_int<32>>		folding_cf;
-	sc_signal<sc_int<32>>		propass_cf;
+	sc_signal<sc_uint<8>>		filter_size_cf;
+	sc_signal<sc_uint<20>>		ifmap_size_cf;
+	sc_signal<sc_uint<32>>		ofmap_height_cf;
+	sc_signal<sc_uint<32>>		ofmap_width_cf;
+	sc_signal<sc_uint<32>>		ofmap_size_cf;
+	sc_signal<sc_uint<32>>		folding_cf;
+	sc_signal<sc_uint<32>>		propass_cf;
+
 	sc_signal<  bool    >		in_vld;
 	sc_signal< sc_int<8>>		w_wdata[filter_height];
 	sc_signal< sc_int<8>>		ifmap_wdata[ifmap_height];

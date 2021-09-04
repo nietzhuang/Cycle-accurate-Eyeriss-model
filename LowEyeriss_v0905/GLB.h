@@ -17,14 +17,14 @@ SC_MODULE(GLB) {
 	sc_in<  sc_bv<13> >		units_cf;
 	sc_in<  sc_bv<7>  >		stride_cf;
 	sc_in<  sc_bv<3>  >		padding_cf;
-	sc_in<  sc_int<32>>		filter_size_cf;
-	sc_in<  sc_int<32>>		ifmap_size_cf;
-	sc_in<  sc_int<32>>		ofmap_height_cf;
-	sc_in<  sc_int<32>>		ofmap_width_cf;
-	sc_in<  sc_int<32>>		ofmap_size_cf;
+	sc_in<  sc_uint<8>>		filter_size_cf;
+	sc_in< sc_uint<20>>		ifmap_size_cf;
+	sc_in< sc_uint<32>>		ofmap_height_cf;
+	sc_in< sc_uint<32>>		ofmap_width_cf;
+	sc_in< sc_uint<32>>		ofmap_size_cf;
 	sc_in<  sc_bv<2>  >		layer_cf;
-	sc_in<  sc_int<32>>		folding_cf;
-	sc_in<  sc_int<32>>		propass_cf;
+	sc_in< sc_uint<32>>		folding_cf;
+	sc_in< sc_uint<32>>		propass_cf;
 
 	// Request to DRAM
 	sc_out<sc_uint<32>>		addr_w_in;
@@ -34,9 +34,9 @@ SC_MODULE(GLB) {
 
 	sc_out<  bool	  >		in_vld;
 	sc_out< sc_int<8> >		w_wdata[filter_height];
-	sc_out< sc_int<8> >		ifmap_wdata[ifmap_height];
+	sc_out< sc_int<8>>		ifmap_wdata[ifmap_height];
 	sc_in<   bool	  >		out_vld[PE_length][PE_width];
-	sc_in<sc_uint<12> >		ofmap_out[PE_length][PE_width];
+	sc_in< sc_uint<12>>		ofmap_out[PE_length][PE_width];
 
 	// Send to testbench
 	sc_out<  bool     >		layer_done;
@@ -48,7 +48,7 @@ SC_MODULE(GLB) {
 	sc_signal<   bool    >	channel_done;
 	sc_signal<sc_uint<10>>	ofmap_channel;
 	sc_signal<  sc_int<8>>*	filter			= new sc_signal<sc_int<8>>[(filter_height * num_filter * units) * (filter_width) * (num_channel)];
-	sc_signal<  sc_int<8>>*	ifmap			= new sc_signal<sc_int<8>>[(ifmap_height) * (ifmap_width) * (num_channel)];
+	sc_signal< sc_int<8> >*	ifmap			= new sc_signal<sc_int<8>>[(ifmap_height) * (ifmap_width) * (num_channel)];
 	sc_signal<sc_uint<12>>*	ofmap_buf		= new sc_signal<sc_uint<12>>[(ofmap_height) * (ofmap_width) * (num_filter)];
 	sc_signal<sc_uint<12>>*	psum_test_buf	= new sc_signal<sc_uint<12>>[(ofmap_height*num_filter) * (ofmap_width) * (num_channel)];
 

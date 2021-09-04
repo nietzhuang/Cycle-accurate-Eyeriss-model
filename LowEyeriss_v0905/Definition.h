@@ -2,7 +2,7 @@
 #define Definition_H
 // Set project names
 const char* const simulation_name	= "Low Eyeriss";
-const char* const pattern_name		= "fc12x12x1_image12x12x1_units60";
+const char* const pattern_name		= "fc5x5x5_image5x5x5_units100";
 
 // Set Testing options
 const bool check_psum = true;  // Set if checking each partial sum is needed. (Set false is recommended if pattern is large.)
@@ -15,15 +15,15 @@ const int			conf_phase		= conf_bit_bw / 32;
 // Definition for NN layer 
 enum enum_LayerType { CONV = 0, MAX = 1, AVG = 2, FC = 3 };
 const int			layer			= FC;
-const int			num_channel		= 1;
+const int			num_channel		= 5;
 const int			num_filter		= 1;
-const int			stride			= 12;  // set as filter height when FC layer
+const int			stride			= 5;  // set as filter height when FC layer
 const int			padding			= 0;
-const int			units			= 60;  // set one when not FC layer.
-const int			filter_height	= 12;
-const int			filter_width	= 12;
-const int			ifmap_height	= 12;
-const int			ifmap_width		= 12;
+const int			units			= 100;  // set one when not FC layer.
+const int			filter_height	= 5;
+const int			filter_width	= 5;
+const int			ifmap_height	= 5;
+const int			ifmap_width		= 5;
 const int			ofmap_height	= (ifmap_height - filter_height + padding*2 + stride) * units / stride;  // units is used for FC layer.
 const int			ofmap_width		= (ifmap_width - filter_width + padding*2 + stride) / stride;
 const int			filter_size		= filter_height * filter_width;

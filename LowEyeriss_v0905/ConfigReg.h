@@ -21,13 +21,13 @@ SC_MODULE(CONFIGREG) {
 	sc_out< sc_bv<3>	>		padding_cf;
 	sc_out< sc_bv<2>	>		dataflow_cf;
 	sc_out< sc_bv<2>	>		layer_cf;
-	sc_out< sc_int<32>  >		filter_size_cf;
-	sc_out< sc_int<32>  >		ifmap_size_cf;
-	sc_out< sc_int<32>  >		ofmap_height_cf;
-	sc_out< sc_int<32>  >		ofmap_width_cf;
-	sc_out< sc_int<32>  >		ofmap_size_cf;
-	sc_out< sc_int<32>  >		folding_cf;
-	sc_out< sc_int<32>  >		propass_cf;
+	sc_out< sc_uint<8>  >		filter_size_cf;
+	sc_out< sc_uint<20>  >		ifmap_size_cf;
+	sc_out< sc_uint<32>  >		ofmap_height_cf;
+	sc_out< sc_uint<32>  >		ofmap_width_cf;
+	sc_out< sc_uint<32>  >		ofmap_size_cf;
+	sc_out< sc_uint<32>  >		folding_cf;
+	sc_out< sc_uint<32>  >		propass_cf;
 
 	SC_CTOR(CONFIGREG) {
 		SC_CTHREAD(config, clk.pos());

@@ -308,6 +308,7 @@
     <None Include="Patterns\max3x3x3_ifmap40x40x3_stride3\iact.dat" />
     <None Include="Patterns\max3x3x3_ifmap40x40x3_stride3\ofmap.dat" />
     <None Include="Patterns\max3x3x3_ifmap40x40x3_stride3\psum.dat" />
+    <None Include="Patterns\max3x3x3_ifmap40x40x3_stride3\weight.dat" />
     <None Include="Patterns\max3x3x3_ifmap90x90x3_stride1\config.dat" />
     <None Include="Patterns\max3x3x3_ifmap90x90x3_stride1\iact.dat" />
     <None Include="Patterns\max3x3x3_ifmap90x90x3_stride1\ofmap.dat" />

@@ -91,15 +91,6 @@
     <Filter Include="Source Files\Patterns\Maximum Pooling\max3x3x256_ifmap13x13x256_stride3_pad1">
       <UniqueIdentifier>{915640f8-893e-4c07-8a36-5249d77c36ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Patterns\Unsupported">
-      <UniqueIdentifier>{d673fdec-fd10-4383-a56c-3dc5c04b4052}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Patterns\Unsupported\unsupported_filter13x13x1_ifmap27x27x1">
-      <UniqueIdentifier>{97459832-6225-4f94-a8ed-3447a592a556}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Patterns\Unsupported\unsupported_filter3x3x1_ifmap5x5x1_IS">
-      <UniqueIdentifier>{ad73d9f8-422d-48d0-af45-32f3304452f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Patterns\Fully-connected">
       <UniqueIdentifier>{afc7fd22-a514-40f4-8ebd-311e50564351}</UniqueIdentifier>
     </Filter>
@@ -126,6 +117,15 @@
     </Filter>
     <Filter Include="Source Files\Patterns\Normal Condition\filter5x5x1_ifmap18x18x1">
       <UniqueIdentifier>{1dd9710e-c39a-40db-a2ca-92cc38090d41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Patterns\Unsupported %28unfinished%29">
+      <UniqueIdentifier>{d673fdec-fd10-4383-a56c-3dc5c04b4052}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter13x13x1_ifmap27x27x1">
+      <UniqueIdentifier>{97459832-6225-4f94-a8ed-3447a592a556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter3x3x1_ifmap5x5x1_IS">
+      <UniqueIdentifier>{ad73d9f8-422d-48d0-af45-32f3304452f7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -466,34 +466,34 @@
       <Filter>Source Files\Patterns\Maximum Pooling\max3x3x256_ifmap13x13x256_stride3_pad1</Filter>
     </None>
     <None Include="Patterns\unsupported_filter13x13x1_ifmap27x27x1\config.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter13x13x1_ifmap27x27x1</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter13x13x1_ifmap27x27x1</Filter>
     </None>
     <None Include="Patterns\unsupported_filter13x13x1_ifmap27x27x1\iact.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter13x13x1_ifmap27x27x1</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter13x13x1_ifmap27x27x1</Filter>
     </None>
     <None Include="Patterns\unsupported_filter13x13x1_ifmap27x27x1\ofmap.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter13x13x1_ifmap27x27x1</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter13x13x1_ifmap27x27x1</Filter>
     </None>
     <None Include="Patterns\unsupported_filter13x13x1_ifmap27x27x1\psum.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter13x13x1_ifmap27x27x1</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter13x13x1_ifmap27x27x1</Filter>
     </None>
     <None Include="Patterns\unsupported_filter13x13x1_ifmap27x27x1\weight.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter13x13x1_ifmap27x27x1</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter13x13x1_ifmap27x27x1</Filter>
     </None>
     <None Include="Patterns\unsupported_filter3x3x1_ifmap5x5x1_IS\config.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
     </None>
     <None Include="Patterns\unsupported_filter3x3x1_ifmap5x5x1_IS\iact.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
     </None>
     <None Include="Patterns\unsupported_filter3x3x1_ifmap5x5x1_IS\ofmap.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
     </None>
     <None Include="Patterns\unsupported_filter3x3x1_ifmap5x5x1_IS\psum.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
     </None>
     <None Include="Patterns\unsupported_filter3x3x1_ifmap5x5x1_IS\weight.dat">
-      <Filter>Source Files\Patterns\Unsupported\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
+      <Filter>Source Files\Patterns\Unsupported %28unfinished%29\unsupported_filter3x3x1_ifmap5x5x1_IS</Filter>
     </None>
     <None Include="Patterns\fc7x7x3_image7x7x3_units14\config.dat">
       <Filter>Source Files\Patterns\Fully-connected\fc7x7x3_image7x7x3_units14</Filter>
@@ -662,6 +662,9 @@
     </None>
     <None Include="Patterns\max3x3x1_ifmap42x42x1_stride3\weight.dat">
       <Filter>Source Files\Patterns\Maximum Pooling\max3x3x1_ifmap42x42x1_stride3</Filter>
+    </None>
+    <None Include="Patterns\max3x3x3_ifmap40x40x3_stride3\weight.dat">
+      <Filter>Source Files\Patterns\Maximum Pooling\max3x3x3_ifmap40x40x3_stride3</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ SC_MODULE(RegFile) {
 	sc_in< sc_int<8> >		ifmap_in;
 	sc_in<sc_uint<12>>		psum_tmp_MACtoReg;
 	sc_out< sc_int<8>>		w;
-	sc_out< sc_int<8>>		in;
+	sc_out<sc_int<8> >		in;
 	sc_out< sc_int<8>>		psum_tmp_RegtoMAC;
 
 	SC_CTOR(RegFile) {

@@ -13,6 +13,9 @@ void RegFile::RegStream(void) {
 	sc_int<8>		ifmap_reg[spad_depth];
 	sc_int<8>		psum_reg;
 
+	sc_uint<4> filter_width_tmp = 0;
+	sc_uint<2> dataflow_tmp = 0;
+
 	// Reset
 	if (rst.read()) {
 		w.write(0);
@@ -40,8 +43,8 @@ void RegFile::RegStream(void) {
 			wait();
 		}
 		else {
-			int filter_width_tmp = filter_width_cf.read().to_uint();
-			int dataflow_tmp = dataflow_cf.read().to_uint();
+			filter_width_tmp = filter_width_cf.read().to_uint();
+			dataflow_tmp = dataflow_cf.read().to_uint();
 
 			switch (dataflow_tmp) {
 			case OS:

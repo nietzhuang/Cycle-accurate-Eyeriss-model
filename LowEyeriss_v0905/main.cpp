@@ -18,7 +18,7 @@ SC_MODULE(SYSTEM) {
 	sc_signal< sc_uint<32>>			addr_w_in;
 	sc_signal< sc_int<8>  >			w_rdata;
 	sc_signal< sc_uint<32>>			addr_ifmpa_in;
-	sc_signal< sc_int<8>  >			ifmap_rdata;
+	sc_signal< sc_int<8> >			ifmap_rdata;
 	sc_signal<    bool	  >			layer_done;
 	sc_signal< sc_uint<12>>			ofmap_result;
 
