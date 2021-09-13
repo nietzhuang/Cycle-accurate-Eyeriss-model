@@ -5,13 +5,10 @@ As an IC designer and DNN accelerator researcher, I found that there exist sever
 The efficiency and performance were both impressive at the time, even now Eyeriss still is. Moreover, the tutorial articles are incredibly in detail.
 In fact, because many variant DNN models booming throughout the world are much difficult to design a corresponding accelerator such as MobileNet, SqueezeNet, old design accelerator might be lack optimisation. Eyeriss project has designed its better and far more sophisticated variant, Eyeriss v2.
 
-This repository involves a mimic design referred to MIT Eyeriss project using SystemC. Now, it is near finished, however, there're several modifications that are worthy to note. 
+This repository involves a mimic design referred to MIT Eyeriss project (Eyeriss v1) using SystemC. Now, it is near finished, however, there're several modifications that are worthy to note. 
 	- At first, I intended to design a variant version to compute AlexNet via only one CPU event, in other words, this version is capable of inferencing entire data in the 	  on-chip caches and reuses not only the data but memory spaces. The current version is in the progress of this purpose.
-
 	- Due to this aggressive purpose, it must have a very large amount of memory cells which is not practical both in industry and comparing benchmarks. For this reason, 	  	  I'll modify it to compute layer by layer.
-	
 	- There're many input/output signals not practical, for instance the ifmap_wdata, because it must be a fixed amount of signals. In order to reduce design period, I 		  determined them in advance.
-
 	- Apart from TLM method of SystemC, I prefer to programme the entire circuit in the HDL manner. Afterwards, if there's enough time, I'll transport it into verilog HDL 	  	  to complete it as ASIC circuit. 
 
 
