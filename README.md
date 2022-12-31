@@ -1,35 +1,104 @@
-# Eyeriss-unfinished
+# A Scalable Eyeriss Model in SystemC
+Eyeriss is a well-known DNN accelerator originating from [MIT EEMS group](https://www.rle.mit.edu/eems/) in 2016. Chen Yu-Hsin et al. proposed Row-stationary dataflow along with a spatial architecture to achieve an energy efficent DNN accelerator. Relative publications can refer to [1] [2] [3] [4], otherwise, Eyeriss v2 is published in 2019 [5].
 
-Introduction:
-As an IC designer and DNN accelerator researcher, I found that there exist several sophisticated designs of accelerators, however, Eyeriss project is the one inspiring me the most.
-The efficiency and performance were both impressive at the time, even now Eyeriss still is. Moreover, the tutorial articles are incredibly in detail.
-In fact, because many variant DNN models booming throughout the world are much difficult to design a corresponding accelerator such as MobileNet, SqueezeNet, old design accelerator might be lack optimisation. Eyeriss project has designed its better and far more sophisticated variant, Eyeriss v2.
+## Description
+This repository designs Eyeriss in cycle-accurate SystemC. Unlike the original architecture, the sizes of on-chip buffers and the number of ports in this variant Eyeriss model remain dynamic when the shape of layer varies. This keeps the scalability when you want to use this design as a part of your implementation or measurement.
 
-This repository involves a mimic design referred to MIT Eyeriss project (Eyeriss v1) using SystemC. Now, it is near finished, however, there're several modifications that are worthy to note. 
+## Features
+ * Support convolutional layer and fully-connected layer.
+ * Support maximum pooling layer.
+ * Support padding and strides.
+ * Support mutiple channels and multiple filters.
+ * Support row stationary dataflow.
+ * Support intermediate psum check.
+ * All submodules are implemented, including configuration register, global buffer, scheduler and PE array.
+ * Provide scalable and dynamic buffers for ifmap, weights, ofmaps, and psum.
+ * Provide scalable ports for trasferring ifmap, weights, ofmaps and psum.
+ * Provide simple patterns and pattern generator in Python.
+ * Testbench simulates as a SoC system where CPU configures and triggrs SC_Eyeriss, then SC_Eyeriss reads data from DRAM. 
 
-	- At first, I intended to design a variant version to compute AlexNet via only one CPU event, in other words, this version is capable of inferencing entire data in the on-chip caches and reuses not only the data but memory spaces. The current version is in the progress of this purpose.
-	
-	- Due to this aggressive purpose, it must have a very large amount of memory cells which is not practical both in industry and comparing benchmarks. For this reason, I'll modify it to compute layer by layer.
-	
-	- There're many input/output signals not practical, for instance the ifmap_wdata, because it must be a fixed amount of signals. In order to reduce design period, I determined them in advance.
-	
-	- Apart from TLM method of SystemC, I prefer to programme the entire circuit in the HDL manner. Afterwards, if there's enough time, I'll transport it into verilog HDL to complete it as ASIC circuit. 
+## Dynamic buffers
+### GLB.cpp
+GLB module contains two buffers storing weights and ifmap stemporarily. These buffer sizes alter when the shape of processed layer varies. IF you want to fix the buffer size, SC_Eyeriss may need to access DRAM more than once when the buffers are too small to compute an entire layer.
+```C++
+void GLB::GLB_read_weight(void) {
+	//...
+	if(layer == FC) {
+		filter[i
+			+ j * filter_height_field * units_field
+			+ k * filter_height_field * units_field * filter_width_field].write(0);
+	//...
+	else {
+		filter[i
+			+ j * filter_height_field * num_filter_field
+			+ k * filter_height_field * num_filter_field * filter_width_field].write(0);
+	//...
+	// Fetch weight data
+	//...
+		filter[i
+			+ j * filter_height_field * num_filter_field
+			+ k * filter_height_field * num_filter_field * filter_width_field].write(w_rdata.read());
+	//...
+}
+
+void GLB::GLB_read_ifmap(void) {
+	//...
+	ifmap[i
+		+ j * ifmap_height
+		+ k * ifmap_height * ifmap_width].write(0);
+	//...
+	// Fetch iact data
+	//...
+	ifmap[i
+		+ j * ifmap_height
+		+ k * ifmap_height * ifmap_width].write(ifmap_rdata.read());
+	//...
+```
+### Scheduler.cpp
+Scheduler module also contains weights and ifmap buffers, however, these buffers can be removed since GLB already has enough buffers to store data within a layer. Similarly, you can fix the buffer size. 
+```C++
+void SCHEDULER::weight_scheduling(void) {
+	sc_int<8>* weight_tmp = new sc_int<8>[(filter_height * units) * (filter_width)];
+	//...
+	for (int i = 0; i < filter_height * units; i++) {
+		for (int j = 0; j < filter_width; j++) {
+			//weight_tmp[i][j] = 0;
+			weight_tmp[i + j * filter_height  * units] = 0;
+		}
+	}
+	//...
+}
+
+void SCHEDULER::ifmap_scheduling(void) {
+	sc_int<8>*	ifmap_tmp = new sc_int<8> [(ifmap_height+padding*2) * (ifmap_width+padding*2)];
+	//...
+	for (int i = 0; i < ifmap_height + padding * 2; i++) {
+		for (int j = 0; j < ifmap_width + padding * 2; j++) {
+			// ifmap_tmp[ifmap_height][ifmap_width];
+			ifmap_tmp[i + j * ifmap_height] = 0; 
+		}
+	}
+	//...
+}
+```
+### RegFile.cpp
+RegFile module contains scratchpads as the PE computes convolutions in a manner of spatial architecture. The size of scratchpads in this module varies as the width of filter. If you want to fix the size, I would recommend the size as large as the largest filter width among the neural network model.
+```C++
+void RegFile::RegStream(void) {
+	sc_int<8>		w_reg[spad_depth];
+	sc_int<8>		ifmap_reg[spad_depth];
+	sc_int<8>		psum_reg;
+	//...		
+}
+```
 
 
 
-Current Progress:
-Now, LowEyeriss is re-configurable and is capable of computing convolutional layer, maximal pooing, fully-connected layer separately including the multiple filters, channels and plenty of different parameters.
+## Usage
 
-
-Next Progress:
-Because of the impractical memory size, it has to resize the cache size and design it to separate layer computation into channel and filter chunks.
-
-
-
-References:
+## References 
 1.  Chen, Yu-Hsin, Joel Emer, and Vivienne Sze. "Eyeriss: A spatial architecture for energy-efficient dataflow for convolutional neural networks." ACM SIGARCH Computer Architecture News 44.3 (2016): 367-379.
 2.  Chen, Yu-Hsin, et al. "Eyeriss: An energy-efficient reconfigurable accelerator for deep convolutional neural networks." IEEE journal of solid-state circuits 52.1 (2016): 127-138.
-3.  Chen, Yu-Hsin, et al. "Eyeriss v2: A flexible accelerator for emerging deep neural networks on mobile devices." IEEE Journal on Emerging and Selected Topics in Circuits and Systems 9.2 (2019): 292-308.
-4.  Sze, Vivienne, et al. "Efficient processing of deep neural networks: A tutorial and survey." Proceedings of the IEEE 105.12 (2017): 2295-2329.
-5.  Sze, Vivienne, et al. "Hardware for machine learning: Challenges and opportunities." 2017 IEEE Custom Integrated Circuits Conference (CICC). IEEE, 2017.
-6.  Sze, Vivienne, et al. "Efficient processing of deep neural networks." Synthesis Lectures on Computer Architecture 15.2 (2020): 1-341.
+3.  Sze, Vivienne, et al. "Efficient processing of deep neural networks: A tutorial and survey." Proceedings of the IEEE 105.12 (2017): 
+4.  Sze, Vivienne, et al. "Efficient processing of deep neural networks." Synthesis Lectures on Computer Architecture 15.2 (2020): 1-341.
+5.  Chen, Yu-Hsin, et al. "Eyeriss v2: A flexible accelerator for emerging deep neural networks on mobile devices." IEEE Journal on Emerging and Selected Topics in Circuits and Systems 9.2 (2019): 292-308.
