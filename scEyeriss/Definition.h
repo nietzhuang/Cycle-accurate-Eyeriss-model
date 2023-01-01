@@ -1,7 +1,7 @@
 #ifndef Definition_H
 #define Definition_H
 // Set project names
-const char* const simulation_name	= "Low Eyeriss";
+const char* const simulation_name	= "scEyeriss";
 const char* const pattern_name		= "fc5x5x5_image5x5x5_units100";
 
 // Set Testing options
