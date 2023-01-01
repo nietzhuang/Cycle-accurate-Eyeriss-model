@@ -1,1 +1,0 @@
-Verify multiple channel in lack of PEs condition.

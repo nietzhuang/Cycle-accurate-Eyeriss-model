@@ -90,16 +90,16 @@ def dense(units, weight, image):
 
 
 # Set parameters
-pattern_name                = 'fc7x7x3_image7x7x3_units14'
+pattern_name                = 'filter3x3x1x3_image5x5x1'  #'fc7x7x3_image7x7x3_units14'
 dataflow                    = 'RS'
-layer                       = 'FC'
-channels                    = 3
-filter_num                  = 1
-units                       = 14
-filter_height, filter_width = (7, 7)
-ifmap_height, ifmap_width   = (7, 7)
-pool_height, pool_width     = (3, 3)
-stride                      = 7
+layer                       = 'CONV'  #'FC'
+channels                    = 1
+filter_num                  = 3
+units                       = 1  # Set 1 if it isn't FC layer 
+filter_height, filter_width = (3, 3)
+ifmap_height, ifmap_width   = (5, 5)
+pool_height, pool_width     = (1, 1)
+stride                      = 1
 padding                     = 0
 if layer == 'CONV':
     ofmap_height            = int((ifmap_height - filter_height + padding*2 + stride) / stride)
@@ -126,7 +126,10 @@ filename_psum = "psum_" + str(pattern_name) + ".dat"
 filename_psum_C = "psum_" + str(pattern_name) + "_C++.dat"
 filename_config = "config_" + str(pattern_name) + ".dat"
 
-
+try:
+    os.mkdir('Patterns')
+except:
+    pass
 os.chdir('Patterns')
 """
 # 3D Convolution
@@ -268,6 +271,10 @@ p.close()
 
 
 # Arrange data path
+try:
+    os.mkdir("Convert2C++")
+except:
+    pass
 try:
     shutil.move("./"+ filename_filter_C, "./Convert2C++/.")
 except:
